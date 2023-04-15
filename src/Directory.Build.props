@@ -6,7 +6,7 @@
     <IsTestProject>$(MSBuildProjectName.Contains('Tests'))</IsTestProject>
     <DebugType>embedded</DebugType>
     <Authors>Chris Pulman, Glenn Watson</Authors>
-    <Copyright>Copyright (c) 2021 ReactiveUI Association Inc</Copyright>
+    <Copyright>Copyright (c) $([System.DateTime]::Now.ToString(yyyy)) ReactiveUI Association Inc</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/reactivemarbles/Navigation</PackageProjectUrl>
     <PackageDescription>Provides a Navigation Framework for ReactiveMarbles based projects.</PackageDescription>

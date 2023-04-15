@@ -19,7 +19,7 @@ public class ViewModelNavigationEventArgs : ViewModelNavigationBaseEventArgs, IV
     /// <param name="view">The view.</param>
     /// <param name="hostName">The Hostname.</param>
     /// <param name="parmeter">The parmeter.</param>
-    public ViewModelNavigationEventArgs(IRxObject? from, IRxObject? to, NavigationType navType, IViewFor? view, string hostName, object? parmeter = null)
+    public ViewModelNavigationEventArgs(IRxObject? from, IRxObject? to, NavigationType navType, IAmViewFor? view, string hostName, object? parmeter = null)
     {
         From = from;
         To = to;
@@ -50,5 +50,5 @@ public class ViewModelNavigationEventArgs : ViewModelNavigationBaseEventArgs, IV
     /// </summary>
     /// <value>The view.</value>
     [DataMember]
-    public IViewFor? View { get; set; }
+    public IAmViewFor? View { get; set; }
 }

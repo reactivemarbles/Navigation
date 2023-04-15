@@ -4,6 +4,9 @@
 
 namespace ReactiveMarbles.ViewModel.Core
 {
+    /// <summary>
+    /// IHostScreen.
+    /// </summary>
     public interface IHostScreen
     {
     }

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveMarbles.ViewModel.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveMarbles.ViewModel.Core", "ViewModel.Core\ReactiveMarbles.ViewModel.Core.csproj", "{990C0E6D-0C09-482D-8AFA-F135EC206C43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveMarbles.ViewModel.WinForms", "ViewModel.WinForms\ReactiveMarbles.ViewModel.WinForms.csproj", "{CD830D09-4558-403B-9504-C0CFD90FDC3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveMarbles.ViewModel.WinForms", "ViewModel.WinForms\ReactiveMarbles.ViewModel.WinForms.csproj", "{CD830D09-4558-403B-9504-C0CFD90FDC3B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionConfig", "SolutionConfig", "{B9D5E36A-C2F2-4D70-B5D0-797574468968}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionConfig", "SolutionC
 		stylecop.json = stylecop.json
 		..\version.json = ..\version.json
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{6E654C37-7F3A-4E17-83C1-CA8BC9B54476}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel.Wpf.Example", "ViewModel.Wpf.Example\ViewModel.Wpf.Example.csproj", "{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,9 +45,16 @@ Global
 		{CD830D09-4558-403B-9504-C0CFD90FDC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD830D09-4558-403B-9504-C0CFD90FDC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD830D09-4558-403B-9504-C0CFD90FDC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E} = {6E654C37-7F3A-4E17-83C1-CA8BC9B54476}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {489B52FF-BC1B-435B-8412-301C8A46D473}
