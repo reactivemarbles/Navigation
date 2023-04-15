@@ -36,8 +36,8 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
     public static readonly DependencyProperty NavigateBackIsEnabledProperty = DependencyProperty.Register(nameof(NavigateBackIsEnabled), typeof(bool), typeof(ViewModelRoutedViewHost), new PropertyMetadata(true));
 
     private readonly ISubject<bool> _canNavigateBackSubject = new Subject<bool>();
-    private readonly ISubject<INotifiyRoutableViewModel> _currentViewModel = new Subject<INotifiyRoutableViewModel>();
-    private IRxObject? __currentViewModel;
+    private readonly ISubject<INotifiyRoutableViewModel> _currentViewModelSubject = new Subject<INotifiyRoutableViewModel>();
+    private IRxObject? _currentViewModel;
     private IAmViewFor? _currentView;
     private IAmViewFor? _lastView;
     private bool _navigateBack;
@@ -52,8 +52,8 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
             {
                 if (vm is IRxObject && !_navigateBack)
                 {
-                    __currentViewModel = vm as IRxObject;
-                    NavigationStack.Add(__currentViewModel?.GetType());
+                    _currentViewModel = vm as IRxObject;
+                    NavigationStack.Add(_currentViewModel);
                 }
 
                 if (_currentView != null)
@@ -89,7 +89,7 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
     /// <value>
     /// The current view model.
     /// </value>
-    public IObservable<INotifiyRoutableViewModel> CurrentViewModel => _currentViewModel.Publish().RefCount();
+    public IObservable<INotifiyRoutableViewModel> CurrentViewModel => _currentViewModelSubject.Publish().RefCount();
 
     /// <summary>
     /// Gets or sets the name of the host.
@@ -121,7 +121,7 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
     /// <value>
     /// The navigation stack.
     /// </value>
-    public ObservableCollection<Type?> NavigationStack { get; } = new();
+    public ObservableCollection<IRxObject?> NavigationStack { get; } = new();
 
     /// <summary>
     /// Gets a value indicating whether [requires setup].
@@ -192,16 +192,15 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
             // Get the previous View
             var count = NavigationStack.Count - 2;
 
-            // TODO: Fix ServiceLocator to allow resolving from a Type
-            _toViewModel = ServiceLocator.Current().GetServiceFromType(NavigationStack[count]) as IRxObject;
+            _toViewModel = NavigationStack[count];
 
             if (_currentView is INotifiyNavigation { ISetupNavigating: true })
             {
-                ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.Back, _lastView, HostName, parameter));
+                ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.Back, _lastView, HostName, parameter));
             }
             else
             {
-                ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.Back, _lastView, HostName, parameter));
+                ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.Back, _lastView, HostName, parameter));
             }
         }
 
@@ -255,16 +254,16 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
             if (fromView?.ISetupNavigating == false || fromView?.ISetupNavigating == null)
             {
                 // No view is setup for reciving navigation notifications.
-                __currentViewModel?.WhenNavigating(e);
+                _currentViewModel?.WhenNavigating(e);
             }
 
             if (!e.Cancel)
             {
-                var nea = new ViewModelNavigationEventArgs(__currentViewModel, _toViewModel, _navigateBack ? NavigationType.Back : NavigationType.New, e.View, HostName, e.NavigationParameter);
+                var nea = new ViewModelNavigationEventArgs(_currentViewModel, _toViewModel, _navigateBack ? NavigationType.Back : NavigationType.New, e.View, HostName, e.NavigationParameter);
                 var toView = e.View as INotifiyNavigation;
                 var callVmNavTo = toView == null || !toView!.ISetupNavigatedTo;
                 var callVmNavFrom = fromView == null || !fromView!.ISetupNavigatedTo;
-                var cvm = __currentViewModel;
+                var cvm = _currentViewModel;
                 _toViewModel ??= e.View?.ViewModel as IRxObject;
                 var tvm = _toViewModel;
 
@@ -276,7 +275,7 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
                     {
                         // NOTE: This gets a new instance of the View
                         _currentView = ServiceLocator.Current().GetView(_toViewModel);
-                        _currentViewModel.OnNext(_toViewModel);
+                        _currentViewModelSubject.OnNext(_toViewModel);
                         foreach (var host in ViewModelRoutedViewHostMixins.NavigationHost.Where(x => x.Key != HostName).Select(x => x.Key))
                         {
                             ViewModelRoutedViewHostMixins.NavigationHost[host].Refresh();
@@ -286,11 +285,11 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
                 else if (_toViewModel != null && _resetStack)
                 {
                     NavigationStack.Clear();
-                    _currentViewModel.OnNext(_toViewModel);
+                    _currentViewModelSubject.OnNext(_toViewModel);
                 }
                 else if (_toViewModel != null && _currentView != null)
                 {
-                    _currentViewModel.OnNext(_toViewModel);
+                    _currentViewModelSubject.OnNext(_toViewModel);
                 }
 
                 if (toView?.ISetupNavigatedTo == true || fromView?.ISetupNavigatedFrom == true)
@@ -323,15 +322,15 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
         _lastView = _currentView;
 
         // NOTE: This gets a new instance of the View
-        _currentView = ServiceLocator.Current().GetView<T>(default!, contract);
+        _currentView = ServiceLocator.Current().GetView<T>(default, contract);
 
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {
-            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter));
+            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter));
         }
         else
         {
-            var ea = new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
+            var ea = new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
             ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(ea);
         }
     }
@@ -346,11 +345,11 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
 
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {
-            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter));
+            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter));
         }
         else
         {
-            var ea = new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
+            var ea = new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
             ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(ea);
         }
     }

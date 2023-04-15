@@ -19,10 +19,10 @@ namespace ViewModel.Wpf.Example
         {
             ServiceLocator.Current().AddSingleton<MainViewModel>(() => new());
             ServiceLocator.Current().AddNavigationView<MainView, MainViewModel>();
-            var vm = ServiceLocator.Current().GetServiceFromType(typeof(MainViewModel)) as IRxObject;
-            var v = ServiceLocator.Current().GetView(vm);
+
             ServiceLocator.Current().AddSingleton<FirstViewModel>(() => new());
             ServiceLocator.Current().AddNavigationView<FirstView, FirstViewModel>();
+
             ServiceLocator.Current().SetupComplete();
             var s = new SecondWindow();
             s.Show();

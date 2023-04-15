@@ -11,6 +11,7 @@ using ReactiveMarbles.ViewModel.Core;
 
 namespace ViewModel.Wpf.Example
 {
+#pragma warning disable IDE0071 // Simplify interpolation
     /// <summary>
     /// MainViewModel.
     /// </summary>
@@ -100,4 +101,5 @@ namespace ViewModel.Wpf.Example
             base.WhenNavigating(e);
         }
     }
+#pragma warning restore IDE0071 // Simplify interpolation
 }

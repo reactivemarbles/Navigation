@@ -17,7 +17,7 @@ public interface IViewModelRoutedViewHost : IActivatableView
     /// <value>
     /// The navigation stack.
     /// </value>
-    ObservableCollection<Type?> NavigationStack { get; }
+    ObservableCollection<IRxObject?> NavigationStack { get; }
 
     /// <summary>
     /// Gets the current view model.

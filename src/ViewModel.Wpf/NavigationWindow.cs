@@ -37,10 +37,7 @@ public class NavigationWindow : Window, ISetNavigation, IUseNavigation, IActivat
     /// <summary>
     /// Initializes a new instance of the <see cref="NavigationWindow"/> class.
     /// </summary>
-    public NavigationWindow()
-    {
-        DefaultStyleKey = typeof(NavigationWindow);
-    }
+    public NavigationWindow() => DefaultStyleKey = typeof(NavigationWindow);
 
     /// <summary>
     /// Gets the can navigate back.

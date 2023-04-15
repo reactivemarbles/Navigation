@@ -20,6 +20,7 @@ public static class RxObjectMixins
     /// Sets the IOC container build complete, Execute this once after completion of IOC registrations.
     /// </summary>
     /// <param name="dummy">The dummy.</param>
+#pragma warning disable RCS1175 // Unused 'this' parameter.
     public static void SetupComplete(this IEditServices dummy) => _buildCompleteSubject.OnNext(Unit.Default);
 
     /// <summary>
@@ -29,4 +30,5 @@ public static class RxObjectMixins
     /// <param name="action">The action.</param>
     /// <value>The build complete.</value>
     public static void BuildComplete(this IAmBuilt dummy, Action action) => _buildCompleteSubject.Subscribe(_ => action());
+#pragma warning restore RCS1175 // Unused 'this' parameter.
 }

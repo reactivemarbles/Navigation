@@ -62,7 +62,9 @@ public static class ServiceLocatorMixins
     /// An instance.
     /// </returns>
     /// <exception cref="System.ArgumentNullException">serviceLocator.</exception>
+#pragma warning disable RCS1163 // Unused parameter.
     public static IAmViewFor? GetView<T>(this IServiceLocator serviceLocator, T? type, string? contract = null)
+#pragma warning restore RCS1163 // Unused parameter.
         where T : class, IRxObject
     {
         if (serviceLocator == null)
@@ -71,29 +73,6 @@ public static class ServiceLocatorMixins
         }
 
         return serviceLocator.GetServiceWithContract<IAmViewFor<T>>(contract);
-    }
-
-    /// <summary>
-    /// Gets the service.
-    /// </summary>
-    /// <typeparam name="T">The Type.</typeparam>
-    /// <param name="serviceLocator">The service locator.</param>
-    /// <param name="type">The type.</param>
-    /// <param name="contract">The contract.</param>
-    /// <returns>
-    /// An instance.
-    /// </returns>
-    /// <exception cref="System.ArgumentNullException">serviceLocator.</exception>
-    public static object GetServiceFromType<T>(this IServiceLocator serviceLocator, T? type, string? contract = null)
-        where T : class
-    {
-        if (serviceLocator == null)
-        {
-            throw new ArgumentNullException(nameof(serviceLocator));
-        }
-
-        var x = default(T);
-        return serviceLocator.GetServiceWithContract<T>(contract);
     }
 
     /// <summary>
