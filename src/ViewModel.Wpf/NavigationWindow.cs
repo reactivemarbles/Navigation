@@ -2,7 +2,6 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
-using System;
 using System.Windows;
 using ReactiveMarbles.ViewModel.Core;
 
@@ -14,8 +13,7 @@ namespace ReactiveMarbles.ViewModel.Wpf;
 /// <seealso cref="Window" />
 /// <seealso cref="ISetNavigation" />
 /// <seealso cref="IUseNavigation" />
-/// <seealso cref="IActivatableView" />
-public class NavigationWindow : Window, ISetNavigation, IUseNavigation, IActivatableView
+public class NavigationWindow : Window, ISetNavigation, IUseNavigation
 {
     /// <summary>
     /// The navigate back is enabled property.

@@ -9,7 +9,7 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// <summary>
 /// IViewModel Routed ViewHost.
 /// </summary>
-public interface IViewModelRoutedViewHost : IActivatableView
+public interface IViewModelRoutedViewHost
 {
     /// <summary>
     /// Gets the navigation stack.
@@ -90,9 +90,8 @@ public interface IViewModelRoutedViewHost : IActivatableView
     /// Navigates the specified contract.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
-    /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    void Navigate(IRxObject viewModel, string? contract = null, object? parameter = null);
+    void Navigate(IRxObject viewModel, object? parameter = null);
 
     /// <summary>
     /// Navigates the and reset.
@@ -107,9 +106,8 @@ public interface IViewModelRoutedViewHost : IActivatableView
     /// Navigates the and reset.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
-    /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    void NavigateAndReset(IRxObject viewModel, string? contract = null, object? parameter = null);
+    void NavigateAndReset(IRxObject viewModel, object? parameter = null);
 
     /// <summary>
     /// Navigates the back.

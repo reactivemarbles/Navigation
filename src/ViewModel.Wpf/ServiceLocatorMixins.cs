@@ -2,7 +2,10 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+using System.Reactive.Concurrency;
+using ReactiveMarbles.Mvvm;
 using ReactiveMarbles.ViewModel.Core;
+using IRxObject = ReactiveMarbles.ViewModel.Core.IRxObject;
 
 namespace ReactiveMarbles.Locator;
 
@@ -26,6 +29,7 @@ public static class ServiceLocatorMixins
             throw new ArgumentNullException(nameof(serviceLocator));
         }
 
+        serviceLocator.AddService<object>(() => new TView(), typeof(TViewModel).FullName!);
         serviceLocator.AddService<IAmViewFor<TViewModel>>(() => new TView());
         serviceLocator.AddService(() => ServiceLocator.Current().GetService<IAmViewFor<TViewModel>>() as TView);
     }
@@ -47,6 +51,7 @@ public static class ServiceLocatorMixins
             throw new ArgumentNullException(nameof(serviceLocator));
         }
 
+        serviceLocator.AddService<object>(() => new TView(), typeof(TViewModel).FullName!);
         serviceLocator.AddService<IAmViewFor<TViewModel>>(() => new TView(), contract);
         serviceLocator.AddService(() => ServiceLocator.Current().GetService<IAmViewFor<TViewModel>>() as TView, contract);
     }
@@ -56,15 +61,12 @@ public static class ServiceLocatorMixins
     /// </summary>
     /// <typeparam name="T">The Type.</typeparam>
     /// <param name="serviceLocator">The service locator.</param>
-    /// <param name="type">The type.</param>
     /// <param name="contract">The contract.</param>
     /// <returns>
     /// An instance.
     /// </returns>
     /// <exception cref="System.ArgumentNullException">serviceLocator.</exception>
-#pragma warning disable RCS1163 // Unused parameter.
-    public static IAmViewFor? GetView<T>(this IServiceLocator serviceLocator, T? type, string? contract = null)
-#pragma warning restore RCS1163 // Unused parameter.
+    public static IAmViewFor? GetView<T>(this IServiceLocator serviceLocator, string? contract = null)
         where T : class, IRxObject
     {
         if (serviceLocator == null)
@@ -73,6 +75,30 @@ public static class ServiceLocatorMixins
         }
 
         return serviceLocator.GetServiceWithContract<IAmViewFor<T>>(contract);
+    }
+
+    /// <summary>
+    /// Gets the service.
+    /// </summary>
+    /// <param name="serviceLocator">The service locator.</param>
+    /// <param name="viewModel">The view model.</param>
+    /// <returns>
+    /// An instance.
+    /// </returns>
+    /// <exception cref="System.ArgumentNullException">serviceLocator.</exception>
+    public static IAmViewFor? GetView(this IServiceLocator serviceLocator, IRxObject viewModel)
+    {
+        if (serviceLocator == null)
+        {
+            throw new ArgumentNullException(nameof(serviceLocator));
+        }
+
+        if (viewModel == null)
+        {
+            throw new ArgumentNullException(nameof(viewModel));
+        }
+
+        return (IAmViewFor)serviceLocator.GetServiceWithContract<object>(viewModel.GetType().FullName);
     }
 
     /// <summary>
@@ -96,5 +122,21 @@ public static class ServiceLocatorMixins
         }
 
         return serviceLocator.GetService<T>(contract!);
+    }
+
+    /// <summary>
+    /// Uses the WPF thread schedulers.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
+    /// <returns>The Builder.</returns>
+    /// <exception cref="System.ArgumentNullException">builder.</exception>
+    public static CoreRegistrationBuilder UseWpfThreadSchedulers(this CoreRegistrationBuilder builder)
+    {
+        if (builder == null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
+
+        return builder.WithMainThreadScheduler(DispatcherScheduler.Current).WithTaskPoolScheduler(TaskPoolScheduler.Default);
     }
 }

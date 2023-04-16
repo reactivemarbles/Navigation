@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for full license information.
 
 using System.Windows;
-using System.Windows.Controls;
 using ReactiveMarbles.ViewModel.Core;
 
 namespace ReactiveMarbles.ViewModel.Wpf;
@@ -12,8 +11,6 @@ namespace ReactiveMarbles.ViewModel.Wpf;
 /// RxWindow.
 /// </summary>
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-/// <seealso cref="System.Windows.Window" />
-/// <seealso cref="ReactiveMarbles.ViewModel.Core.IAmViewFor&lt;TViewModel&gt;" />
 public class RxWindow<TViewModel> : Window, IAmViewFor<TViewModel>
     where TViewModel : class, IRxObject
 {

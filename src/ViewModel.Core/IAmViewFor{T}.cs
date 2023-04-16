@@ -8,7 +8,6 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// IAmViewFor.
 /// </summary>
 /// <typeparam name="T">The type of ViewModel.</typeparam>
-/// <seealso cref="ReactiveMarbles.ViewModel.Core.IActivatableView" />
 public interface IAmViewFor<T> : IAmViewFor
 where T : class
 {

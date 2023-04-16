@@ -24,8 +24,6 @@ namespace ViewModel.Wpf.Example
                 ViewModel ??= ServiceLocator.Current().GetService<FirstViewModel>();
                 GotoFirst.Command = ViewModel.GotoFirst;
                 GotoMain.Command = ViewModel.GotoMain;
-            ////    this.BindCommand(ViewModel, vm => vm.GotoMain, v => v.GotoMain).DisposeWith(d);
-            ////    this.BindCommand(ViewModel, vm => vm.GotoFirst, v => v.GotoFirst).DisposeWith(d);
             });
         }
     }

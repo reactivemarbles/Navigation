@@ -22,8 +22,7 @@ namespace ViewModel.Wpf.Example
             ServiceLocator.Current().AddCoreRegistrations(() =>
             CoreRegistrationBuilder
                 .Create()
-                .WithMainThreadScheduler(DefaultScheduler.Instance)
-                .WithTaskPoolScheduler(TaskPoolScheduler.Default)
+                .UseWpfThreadSchedulers()
                 .WithExceptionHandler(new DebugExceptionHandler())
                 .Build());
             ServiceLocator.Current().AddSingleton<MainWindowViewModel>(() => new());

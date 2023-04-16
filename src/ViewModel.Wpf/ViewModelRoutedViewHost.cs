@@ -2,9 +2,7 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -149,10 +147,16 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
     /// Navigates the ViewModel contract.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
-    /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    public void Navigate(IRxObject viewModel, string? contract = null, object? parameter = null)
-        => InternalNavigate(viewModel, contract, parameter);
+    public void Navigate(IRxObject viewModel, object? parameter = null)
+    {
+        if (viewModel is null)
+        {
+            throw new ArgumentNullException(nameof(viewModel));
+        }
+
+        InternalNavigate(viewModel, parameter);
+    }
 
     /// <summary>
     /// Navigates and resets.
@@ -171,12 +175,16 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
     /// Navigates the and reset.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
-    /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    public void NavigateAndReset(IRxObject viewModel, string? contract = null, object? parameter = null)
+    public void NavigateAndReset(IRxObject viewModel, object? parameter = null)
     {
+        if (viewModel is null)
+        {
+            throw new ArgumentNullException(nameof(viewModel));
+        }
+
         _resetStack = true;
-        InternalNavigate(viewModel, contract, parameter);
+        InternalNavigate(viewModel, parameter);
     }
 
     /// <summary>
@@ -248,7 +256,7 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
         }
 
         // requested should return result here
-        ViewModelRoutedViewHostMixins.ResultNavigating[HostName].DistinctUntilChanged().ObserveOn(DefaultScheduler.Instance).Subscribe(e =>
+        ViewModelRoutedViewHostMixins.ResultNavigating[HostName].DistinctUntilChanged().ObserveOn(DispatcherScheduler.Current).Subscribe(e =>
         {
             var fromView = _currentView as INotifiyNavigation;
             if (fromView?.ISetupNavigating == false || fromView?.ISetupNavigating == null)
@@ -269,27 +277,26 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
 
                 if (_navigateBack)
                 {
-                    // Remove the current
+                    // Remove the current vm from the stack
                     NavigationStack.RemoveAt(NavigationStack.Count - 1);
-                    if (_toViewModel != null)
+                    if (tvm != null)
                     {
-                        // NOTE: This gets a new instance of the View
-                        _currentView = ServiceLocator.Current().GetView(_toViewModel);
-                        _currentViewModelSubject.OnNext(_toViewModel);
+                        _currentView = ServiceLocator.Current().GetView(tvm);
+                        _currentViewModelSubject.OnNext(tvm);
                         foreach (var host in ViewModelRoutedViewHostMixins.NavigationHost.Where(x => x.Key != HostName).Select(x => x.Key))
                         {
                             ViewModelRoutedViewHostMixins.NavigationHost[host].Refresh();
                         }
                     }
                 }
-                else if (_toViewModel != null && _resetStack)
+                else if (tvm != null && _resetStack)
                 {
                     NavigationStack.Clear();
-                    _currentViewModelSubject.OnNext(_toViewModel);
+                    _currentViewModelSubject.OnNext(tvm);
                 }
-                else if (_toViewModel != null && _currentView != null)
+                else if (tvm != null && _currentView != null)
                 {
-                    _currentViewModelSubject.OnNext(_toViewModel);
+                    _currentViewModelSubject.OnNext(tvm);
                 }
 
                 if (toView?.ISetupNavigatedTo == true || fromView?.ISetupNavigatedFrom == true)
@@ -322,7 +329,7 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
         _lastView = _currentView;
 
         // NOTE: This gets a new instance of the View
-        _currentView = ServiceLocator.Current().GetView<T>(default, contract);
+        _currentView = ServiceLocator.Current().GetView<T>(contract);
 
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {
@@ -335,13 +342,13 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
         }
     }
 
-    private void InternalNavigate(IRxObject viewModel, string? contract, object? parameter)
+    private void InternalNavigate(IRxObject viewModel, object? parameter)
     {
         _toViewModel = viewModel;
         _lastView = _currentView;
 
         // NOTE: This gets a new instance of the View
-        _currentView = ServiceLocator.Current().GetView(_toViewModel, contract);
+        _currentView = ServiceLocator.Current().GetView(viewModel);
 
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {

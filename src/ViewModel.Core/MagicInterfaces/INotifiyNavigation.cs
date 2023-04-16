@@ -9,9 +9,8 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// <summary>
 /// INotifiy Navigation.
 /// </summary>
-/// <seealso cref="IActivatableView" />
 /// <seealso cref="ICancelable" />
-public interface INotifiyNavigation : IActivatableView, ICancelable
+public interface INotifiyNavigation : ICancelable
 {
     /// <summary>
     /// Gets or sets a value indicating whether [i setup navigated to].

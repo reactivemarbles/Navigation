@@ -24,7 +24,6 @@ namespace ViewModel.Wpf.Example
         public FirstViewModel() =>
             this.BuildComplete(() =>
                 {
-                    // TODO: Fix RxCommand => Could not load type 'ReactiveMarbles.Mvvm.ScheduledSubject'
                     GotoMain = RxCommand.Create(() =>
                     {
                         this.NavigateToView<MainViewModel>("mainWindow");

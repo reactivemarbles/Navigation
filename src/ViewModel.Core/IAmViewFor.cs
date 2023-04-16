@@ -7,8 +7,7 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// <summary>
 /// IAmViewFor.
 /// </summary>
-/// <seealso cref="ReactiveMarbles.ViewModel.Core.IActivatableView" />
-public interface IAmViewFor : IActivatableView
+public interface IAmViewFor
 {
     /// <summary>
     /// Gets or sets the View Model associated with the View.
