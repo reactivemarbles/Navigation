@@ -3,29 +3,27 @@
 // See the LICENSE file in the project root for full license information.
 
 using System;
-using System.Reactive.Disposables;
 using ReactiveMarbles.Command;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.Core;
 
-namespace ViewModel.Wpf.Example
+namespace ViewModel.Wpf.Example;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml.
+/// </summary>
+public partial class MainWindow
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml.
+    /// Initializes a new instance of the <see cref="MainWindow"/> class.
     /// </summary>
-    public partial class MainWindow
+    public MainWindow()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class.
-        /// </summary>
-        public MainWindow()
+        InitializeComponent();
+        this.Events().Loaded.Subscribe(_ =>
         {
-            InitializeComponent();
-            this.Events().Loaded.Subscribe(_ =>
-            {
-                this.NavigateToView<MainViewModel>();
-                NavBack.Command = RxCommand.Create(() => this.NavigateBack(), CanNavigateBack);
-            });
-        }
+            this.NavigateToView<MainViewModel>();
+            NavBack.Command = RxCommand.Create(() => this.NavigateBack(), CanNavigateBack);
+        });
     }
 }

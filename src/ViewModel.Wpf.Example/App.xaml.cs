@@ -7,25 +7,24 @@ using System.Windows;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.Mvvm;
 
-namespace ViewModel.Wpf.Example
+namespace ViewModel.Wpf.Example;
+
+/// <summary>
+/// Interaction logic for App.xaml.
+/// </summary>
+public partial class App : Application
 {
     /// <summary>
-    /// Interaction logic for App.xaml.
+    /// Initializes a new instance of the <see cref="App"/> class.
     /// </summary>
-    public partial class App : Application
+    public App()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="App"/> class.
-        /// </summary>
-        public App()
-        {
-            ServiceLocator.Current().AddCoreRegistrations(() =>
-            CoreRegistrationBuilder
-                .Create()
-                .UseWpfThreadSchedulers()
-                .WithExceptionHandler(new DebugExceptionHandler())
-                .Build());
-            ServiceLocator.Current().AddSingleton<MainWindowViewModel>(() => new());
-        }
+        ServiceLocator.Current().AddCoreRegistrations(() =>
+        CoreRegistrationBuilder
+            .Create()
+            .UseWpfThreadSchedulers()
+            .WithExceptionHandler(new DebugExceptionHandler())
+            .Build());
+        ServiceLocator.Current().AddSingleton<MainWindowViewModel>(() => new());
     }
 }

@@ -25,6 +25,6 @@ public static class CoreRegistrationBuilderMixins
             throw new ArgumentNullException(nameof(builder));
         }
 
-        return builder.WithMainThreadScheduler(DispatcherScheduler.Current).WithTaskPoolScheduler(TaskPoolScheduler.Default);
+        return builder.WithMainThreadScheduler(new SynchronizationContextScheduler(new WindowsFormsSynchronizationContext())).WithTaskPoolScheduler(TaskPoolScheduler.Default);
     }
 }

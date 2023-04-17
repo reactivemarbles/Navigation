@@ -8,24 +8,23 @@ using ReactiveMarbles.Command;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.Core;
 
-namespace ViewModel.Wpf.Example
+namespace ViewModel.Wpf.Example;
+
+/// <summary>
+/// Interaction logic for SecondWindow.xaml.
+/// </summary>
+public partial class SecondWindow : IUseNavigation
 {
     /// <summary>
-    /// Interaction logic for SecondWindow.xaml.
+    /// Initializes a new instance of the <see cref="SecondWindow"/> class.
     /// </summary>
-    public partial class SecondWindow : IUseNavigation
+    public SecondWindow()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SecondWindow"/> class.
-        /// </summary>
-        public SecondWindow()
+        InitializeComponent();
+        this.Events().Loaded.Subscribe(_ =>
         {
-            InitializeComponent();
-            this.Events().Loaded.Subscribe(_ =>
-            {
-                this.NavigateToView<FirstViewModel>();
-                NavBack.Command = RxCommand.Create(() => this.NavigateBack(), CanNavigateBack);
-            });
-        }
+            this.NavigateToView<FirstViewModel>();
+            NavBack.Command = RxCommand.Create(() => this.NavigateBack(), CanNavigateBack);
+        });
     }
 }

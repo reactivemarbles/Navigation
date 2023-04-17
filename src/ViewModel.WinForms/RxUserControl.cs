@@ -5,32 +5,31 @@
 using System.ComponentModel;
 using ReactiveMarbles.ViewModel.Core;
 
-namespace ReactiveMarbles.ViewModel.WinForms
+namespace ReactiveMarbles.ViewModel.WinForms;
+
+/// <summary>
+/// RxUserControl.
+/// </summary>
+/// <typeparam name="TViewModel">The type of the view model.</typeparam>
+public partial class RxUserControl<TViewModel> : UserControl, IAmViewFor<TViewModel>
+where TViewModel : class, IRxObject
 {
     /// <summary>
-    /// RxUserControl.
+    /// Initializes a new instance of the <see cref="RxUserControl{TViewModel}"/> class.
     /// </summary>
-    /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-    public partial class RxUserControl<TViewModel> : UserControl, IAmViewFor<TViewModel>
-    where TViewModel : class, IRxObject
+    public RxUserControl() => InitializeComponent();
+
+    /// <inheritdoc/>
+    [Category("ReactiveMarbles")]
+    [Description("The ViewModel.")]
+    [Bindable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public TViewModel? ViewModel { get; set; }
+
+    /// <inheritdoc/>
+    object? IAmViewFor.ViewModel
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RxUserControl{TViewModel}"/> class.
-        /// </summary>
-        public RxUserControl() => InitializeComponent();
-
-        /// <inheritdoc/>
-        [Category("ReactiveMarbles")]
-        [Description("The ViewModel.")]
-        [Bindable(true)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public TViewModel? ViewModel { get; set; }
-
-        /// <inheritdoc/>
-        object? IAmViewFor.ViewModel
-        {
-            get => ViewModel;
-            set => ViewModel = (TViewModel?)value;
-        }
+        get => ViewModel;
+        set => ViewModel = (TViewModel?)value;
     }
 }

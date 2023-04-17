@@ -3,13 +3,14 @@
 // See the LICENSE file in the project root for full license information.
 
 using System.Collections.ObjectModel;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows;
 using System.Windows.Controls;
 using ReactiveMarbles.Locator;
+using ReactiveMarbles.Mvvm;
 using ReactiveMarbles.ViewModel.Core;
+using IRxObject = ReactiveMarbles.ViewModel.Core.IRxObject;
 
 namespace ReactiveMarbles.ViewModel.Wpf;
 
@@ -41,6 +42,7 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
     private bool _navigateBack;
     private bool _resetStack;
     private IRxObject? _toViewModel;
+    private ICoreRegistration? _coreRegistration;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ViewModelRoutedViewHost"/> class.
@@ -255,8 +257,10 @@ public class ViewModelRoutedViewHost : ContentControl, IViewModelRoutedViewHost
             throw new ArgumentNullException(HostName, "Navigation Host Name not set");
         }
 
+        _coreRegistration = ServiceLocator.Current().GetService<ICoreRegistration>();
+
         // requested should return result here
-        ViewModelRoutedViewHostMixins.ResultNavigating[HostName].DistinctUntilChanged().ObserveOn(DispatcherScheduler.Current).Subscribe(e =>
+        ViewModelRoutedViewHostMixins.ResultNavigating[HostName].DistinctUntilChanged().ObserveOn(_coreRegistration.MainThreadScheduler).Subscribe(e =>
         {
             var fromView = _currentView as INotifiyNavigation;
             if (fromView?.ISetupNavigating == false || fromView?.ISetupNavigating == null)

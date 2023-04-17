@@ -6,25 +6,25 @@ using ReactiveMarbles.Locator;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.WinForms;
 
-namespace ViewModel.WinForms.Example.Views
+namespace ViewModel.WinForms.Example.Views;
+
+/// <summary>
+/// FirstView.
+/// </summary>
+public partial class FirstView : RxUserControl<FirstViewModel>
 {
     /// <summary>
-    /// FirstView.
+    /// Initializes a new instance of the <see cref="FirstView"/> class.
     /// </summary>
-    public partial class FirstView : RxUserControl<FirstViewModel>
+    public FirstView()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FirstView"/> class.
-        /// </summary>
-        public FirstView()
+        InitializeComponent();
+        this.Events().Load.Subscribe(_ =>
         {
-            InitializeComponent();
-            this.Events().Load.Subscribe(_ =>
-            {
-                ViewModel ??= ServiceLocator.Current().GetService<FirstViewModel>();
-                ////GotoFirst.Command = ViewModel.GotoFirst;
-                ////GotoMain.Command = ViewModel.GotoMain;
-            });
-        }
+            BackColor = Color.BlueViolet;
+            ViewModel ??= ServiceLocator.Current().GetService<FirstViewModel>();
+            ////GotoFirst.Command = ViewModel.GotoFirst;
+            ////GotoMain.Command = ViewModel.GotoMain;
+        });
     }
 }

@@ -2,29 +2,29 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
-using ReactiveMarbles.Locator;
+using ReactiveMarbles.Command;
 using ReactiveMarbles.ObservableEvents;
+using ReactiveMarbles.ViewModel.Core;
 using ReactiveMarbles.ViewModel.WinForms;
 
-namespace ViewModel.WinForms.Example.Views;
+namespace ViewModel.WinForms.Example;
 
 /// <summary>
-/// MainView.
+/// SecondForm.
 /// </summary>
-public partial class MainView : RxUserControl<MainViewModel>
+/// <seealso cref="System.Windows.Forms.Form" />
+public partial class SecondForm : NavigationForm
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="MainView"/> class.
+    /// Initializes a new instance of the <see cref="SecondForm"/> class.
     /// </summary>
-    public MainView()
+    public SecondForm()
     {
         InitializeComponent();
         this.Events().Load.Subscribe(_ =>
         {
-            BackColor = Color.LightGreen;
-            ViewModel ??= ServiceLocator.Current().GetService<MainViewModel>();
-            ////GotoFirst.Command = ViewModel.GotoFirst;
-            ////GotoMain.Command = ViewModel.GotoMain;
+            this.NavigateToView<FirstViewModel>();
+            ////NavBack.Command = RxCommand.Create(() => this.NavigateBack(), CanNavigateBack);
         });
     }
 }

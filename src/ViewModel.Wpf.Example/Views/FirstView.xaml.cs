@@ -6,25 +6,24 @@ using System;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.ObservableEvents;
 
-namespace ViewModel.Wpf.Example
+namespace ViewModel.Wpf.Example;
+
+/// <summary>
+/// Interaction logic for MainView.xaml.
+/// </summary>
+public partial class FirstView
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml.
+    /// Initializes a new instance of the <see cref="FirstView"/> class.
     /// </summary>
-    public partial class FirstView
+    public FirstView()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FirstView"/> class.
-        /// </summary>
-        public FirstView()
+        InitializeComponent();
+        this.Events().Loaded.Subscribe(_ =>
         {
-            InitializeComponent();
-            this.Events().Loaded.Subscribe(_ =>
-            {
-                ViewModel ??= ServiceLocator.Current().GetService<FirstViewModel>();
-                GotoFirst.Command = ViewModel.GotoFirst;
-                GotoMain.Command = ViewModel.GotoMain;
-            });
-        }
+            ViewModel ??= ServiceLocator.Current().GetService<FirstViewModel>();
+            GotoFirst.Command = ViewModel.GotoFirst;
+            GotoMain.Command = ViewModel.GotoMain;
+        });
     }
 }

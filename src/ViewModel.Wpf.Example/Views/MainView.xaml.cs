@@ -7,25 +7,24 @@ using ReactiveMarbles.Locator;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.Core;
 
-namespace ViewModel.Wpf.Example
+namespace ViewModel.Wpf.Example;
+
+/// <summary>
+/// Interaction logic for MainView.xaml.
+/// </summary>
+public partial class MainView : IAmViewFor<MainViewModel>
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml.
+    /// Initializes a new instance of the <see cref="MainView"/> class.
     /// </summary>
-    public partial class MainView : IAmViewFor<MainViewModel>
+    public MainView()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainView"/> class.
-        /// </summary>
-        public MainView()
+        InitializeComponent();
+        this.Events().Loaded.Subscribe(_ =>
         {
-            InitializeComponent();
-            this.Events().Loaded.Subscribe(_ =>
-            {
-                ViewModel ??= ServiceLocator.Current().GetService<MainViewModel>();
-                GotoFirst.Command = ViewModel.GotoFirst;
-                GotoMain.Command = ViewModel.GotoMain;
-            });
-        }
+            ViewModel ??= ServiceLocator.Current().GetService<MainViewModel>();
+            GotoFirst.Command = ViewModel.GotoFirst;
+            GotoMain.Command = ViewModel.GotoMain;
+        });
     }
 }

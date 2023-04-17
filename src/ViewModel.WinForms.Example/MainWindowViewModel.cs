@@ -4,6 +4,8 @@
 
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.ViewModel.Core;
+using ViewModel.WinForms.Example;
+using ViewModel.WinForms.Example.Views;
 
 namespace ViewModel.Wpf.Example;
 
@@ -24,7 +26,7 @@ public class MainWindowViewModel : RxObject
         ServiceLocator.Current().AddNavigationView<FirstView, FirstViewModel>();
 
         ServiceLocator.Current().SetupComplete();
-        var s = new SecondWindow();
+        var s = new SecondForm();
         s.Show();
     }
 }
