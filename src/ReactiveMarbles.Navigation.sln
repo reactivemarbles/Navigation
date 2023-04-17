@@ -25,7 +25,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionConfig", "SolutionC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{6E654C37-7F3A-4E17-83C1-CA8BC9B54476}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel.Wpf.Example", "ViewModel.Wpf.Example\ViewModel.Wpf.Example.csproj", "{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel.Wpf.Example", "ViewModel.Wpf.Example\ViewModel.Wpf.Example.csproj", "{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel.WinForms.Example", "ViewModel.WinForms.Example\ViewModel.WinForms.Example.csproj", "{67688407-5509-4158-B9C3-5C2076E4946C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,12 +51,17 @@ Global
 		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67688407-5509-4158-B9C3-5C2076E4946C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67688407-5509-4158-B9C3-5C2076E4946C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67688407-5509-4158-B9C3-5C2076E4946C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67688407-5509-4158-B9C3-5C2076E4946C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E} = {6E654C37-7F3A-4E17-83C1-CA8BC9B54476}
+		{67688407-5509-4158-B9C3-5C2076E4946C} = {6E654C37-7F3A-4E17-83C1-CA8BC9B54476}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {489B52FF-BC1B-435B-8412-301C8A46D473}

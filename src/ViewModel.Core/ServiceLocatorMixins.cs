@@ -2,10 +2,7 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
-using System.Reactive.Concurrency;
-using ReactiveMarbles.Mvvm;
 using ReactiveMarbles.ViewModel.Core;
-using IRxObject = ReactiveMarbles.ViewModel.Core.IRxObject;
 
 namespace ReactiveMarbles.Locator;
 
@@ -122,21 +119,5 @@ public static class ServiceLocatorMixins
         }
 
         return serviceLocator.GetService<T>(contract!);
-    }
-
-    /// <summary>
-    /// Uses the WPF thread schedulers.
-    /// </summary>
-    /// <param name="builder">The builder.</param>
-    /// <returns>The Builder.</returns>
-    /// <exception cref="System.ArgumentNullException">builder.</exception>
-    public static CoreRegistrationBuilder UseWpfThreadSchedulers(this CoreRegistrationBuilder builder)
-    {
-        if (builder == null)
-        {
-            throw new ArgumentNullException(nameof(builder));
-        }
-
-        return builder.WithMainThreadScheduler(DispatcherScheduler.Current).WithTaskPoolScheduler(TaskPoolScheduler.Default);
     }
 }
