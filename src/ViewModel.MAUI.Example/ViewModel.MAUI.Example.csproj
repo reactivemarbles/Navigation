@@ -12,6 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <PublishReadyToRun>false</PublishReadyToRun>
 
 		<!-- Display name -->
 		<ApplicationTitle>ViewModel.MAUI.Example</ApplicationTitle>
@@ -53,19 +54,14 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageReference Include="ReactiveMarbles.Command" Version="1.0.4" />
+    <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator" Version="1.2.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ReactiveMarbles.ViewModel.MAUI\ReactiveMarbles.ViewModel.MAUI.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Views\FirstView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\MainView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

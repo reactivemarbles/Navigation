@@ -14,7 +14,7 @@ namespace ReactiveMarbles.ViewModel.MAUI;
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
 /// <seealso cref="ShellContent" />
 public class RxShellContent<TViewModel> : ShellContent
-    where TViewModel : class
+    where TViewModel : class, IRxObject
 {
     /// <summary>
     /// The contract property.

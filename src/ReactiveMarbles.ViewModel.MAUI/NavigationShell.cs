@@ -532,7 +532,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
             for (var i = 1; i < NavigationStack.Count - 1; i++)
             {
                 var vm = NavigationStack[i];
-                var p = ServiceLocator.Current().GetView(vm);
+                var p = ServiceLocator.Current().GetView(vm!);
                 if (p != null)
                 {
                     var page = ToPage(p!);

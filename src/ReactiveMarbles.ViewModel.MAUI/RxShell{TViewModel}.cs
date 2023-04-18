@@ -12,7 +12,7 @@ namespace ReactiveMarbles.ViewModel.MAUI;
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
 /// <seealso cref="Microsoft.Maui.Controls.Shell" />
 public class RxShell<TViewModel> : Shell, IAmViewFor<TViewModel>
-    where TViewModel : class
+    where TViewModel : class, IRxObject
 {
     /// <summary>
     /// The view model bindable property.
