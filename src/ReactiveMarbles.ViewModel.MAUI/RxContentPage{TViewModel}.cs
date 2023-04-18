@@ -7,11 +7,11 @@ using ReactiveMarbles.ViewModel.Core;
 namespace ReactiveMarbles.ViewModel.MAUI;
 
 /// <summary>
-/// ReactiveShell.
+/// This is an <see cref="ContentPage"/> that is also an <see cref="IAmViewFor{T}"/>.
 /// </summary>
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-/// <seealso cref="Microsoft.Maui.Controls.Shell" />
-public class RxShell<TViewModel> : Shell, IAmViewFor<TViewModel>
+/// <seealso cref="ContentPage" />
+public class RxContentPage<TViewModel> : ContentPage, IAmViewFor<TViewModel>
     where TViewModel : class
 {
     /// <summary>
@@ -20,7 +20,7 @@ public class RxShell<TViewModel> : Shell, IAmViewFor<TViewModel>
     public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(
      nameof(ViewModel),
      typeof(TViewModel),
-     typeof(RxShell<TViewModel>),
+     typeof(RxContentPage<TViewModel>),
      default(TViewModel),
      BindingMode.OneWay,
      propertyChanged: OnViewModelChanged);

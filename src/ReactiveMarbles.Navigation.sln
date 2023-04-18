@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel.Wpf.Example", "Vi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel.WinForms.Example", "ViewModel.WinForms.Example\ViewModel.WinForms.Example.csproj", "{67688407-5509-4158-B9C3-5C2076E4946C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveMarbles.ViewModel.MAUI", "ReactiveMarbles.ViewModel.MAUI\ReactiveMarbles.ViewModel.MAUI.csproj", "{267783AB-7239-42A1-9596-22F53B8884D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveMarbles.ViewModel.MAUI", "ReactiveMarbles.ViewModel.MAUI\ReactiveMarbles.ViewModel.MAUI.csproj", "{267783AB-7239-42A1-9596-22F53B8884D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel.MAUI.Example", "ViewModel.MAUI.Example\ViewModel.MAUI.Example.csproj", "{DE39BF42-E055-4797-9807-6AAA44089FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,15 @@ Global
 		{267783AB-7239-42A1-9596-22F53B8884D1}.Design|Any CPU.Build.0 = Design|Any CPU
 		{267783AB-7239-42A1-9596-22F53B8884D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{267783AB-7239-42A1-9596-22F53B8884D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Design|Any CPU.ActiveCfg = Design|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Design|Any CPU.Build.0 = Design|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Design|Any CPU.Deploy.0 = Design|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE39BF42-E055-4797-9807-6AAA44089FE5}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +92,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5E67BC1D-9AD7-4DDA-B095-6EFE99AD2C2E} = {6E654C37-7F3A-4E17-83C1-CA8BC9B54476}
 		{67688407-5509-4158-B9C3-5C2076E4946C} = {6E654C37-7F3A-4E17-83C1-CA8BC9B54476}
+		{DE39BF42-E055-4797-9807-6AAA44089FE5} = {6E654C37-7F3A-4E17-83C1-CA8BC9B54476}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {489B52FF-BC1B-435B-8412-301C8A46D473}

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<rxNav:RxContentPage
+    x:Class="ViewModel.MAUI.Example.FirstView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ViewModel.MAUI.Example"
+    xmlns:rxNav="https://github.com/reactivemarbles/Navigation"
+    x:TypeArguments="local:FirstViewModel">
+    <rxNav:RxContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Label Text="First View" />
+            <Button x:Name="GotoMain" Text="Goto Main" />
+            <Button x:Name="GotoFirst" Text="Goto Back" />
+        </StackLayout>
+    </rxNav:RxContentPage.Content>
+</rxNav:RxContentPage>

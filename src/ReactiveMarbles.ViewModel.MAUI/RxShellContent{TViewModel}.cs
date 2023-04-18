@@ -6,7 +6,7 @@ using System;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.ViewModel.Core;
 
-namespace ReactiveUI.Maui;
+namespace ReactiveMarbles.ViewModel.MAUI;
 
 /// <summary>
 /// ReactiveShellContent.
