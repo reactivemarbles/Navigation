@@ -24,7 +24,7 @@ public partial class SecondForm : NavigationForm
         this.Events().Load.Subscribe(_ =>
         {
             this.NavigateToView<FirstViewModel>();
-            ////NavBack.Command = RxCommand.Create(() => this.NavigateBack(), CanNavigateBack);
+            NavBack.Command = RxCommand.Create(() => this.NavigateBack(), CanNavigateBack);
         });
     }
 }

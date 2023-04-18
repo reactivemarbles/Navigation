@@ -14,6 +14,7 @@ namespace ViewModel.Wpf.Example;
 /// </summary>
 public class MainWindowViewModel : RxObject
 {
+#if !DESIGN
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
     /// </summary>
@@ -29,4 +30,5 @@ public class MainWindowViewModel : RxObject
         var s = new SecondForm();
         s.Show();
     }
+#endif
 }

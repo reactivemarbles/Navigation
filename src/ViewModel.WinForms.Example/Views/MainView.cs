@@ -11,7 +11,11 @@ namespace ViewModel.WinForms.Example.Views;
 /// <summary>
 /// MainView.
 /// </summary>
+#if DESIGN
+public partial class MainView : UserControl
+#else
 public partial class MainView : RxUserControl<MainViewModel>
+#endif
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="MainView"/> class.
@@ -19,12 +23,13 @@ public partial class MainView : RxUserControl<MainViewModel>
     public MainView()
     {
         InitializeComponent();
+#if !DESIGN
         this.Events().Load.Subscribe(_ =>
         {
-            BackColor = Color.LightGreen;
             ViewModel ??= ServiceLocator.Current().GetService<MainViewModel>();
-            ////GotoFirst.Command = ViewModel.GotoFirst;
-            ////GotoMain.Command = ViewModel.GotoMain;
+            GotoFirst.Command = ViewModel.GotoFirst;
+            GotoMain.Command = ViewModel.GotoMain;
         });
+#endif
     }
 }

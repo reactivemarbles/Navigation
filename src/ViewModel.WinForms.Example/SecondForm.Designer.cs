@@ -28,17 +28,31 @@ partial class SecondForm
     /// </summary>
     private void InitializeComponent()
     {
+        NavBack = new Button();
         SuspendLayout();
         // 
-        // secondWindow
+        // NavBack
+        // 
+        NavBack.Dock = DockStyle.Top;
+        NavBack.Location = new Point(0, 0);
+        NavBack.Name = "NavBack";
+        NavBack.Size = new Size(800, 34);
+        NavBack.TabIndex = 2;
+        NavBack.Text = "Back";
+        NavBack.UseVisualStyleBackColor = true;
+        // 
+        // SecondForm
         // 
         AutoScaleDimensions = new SizeF(10F, 25F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(800, 450);
+        Controls.Add(NavBack);
         Name = "SecondForm";
         Text = "SecondForm";
         ResumeLayout(false);
     }
 
     #endregion
+
+    private Button NavBack;
 }

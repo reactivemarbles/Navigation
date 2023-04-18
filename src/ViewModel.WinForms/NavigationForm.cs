@@ -13,6 +13,9 @@ namespace ReactiveMarbles.ViewModel.WinForms;
 /// <seealso cref="System.Windows.Forms.Form" />
 public partial class NavigationForm : Form, ISetNavigation, IUseNavigation
 {
+    private DockStyle _navigationFrameDock = DockStyle.Fill;
+    private bool _navigateBackIsEnabled = true;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="NavigationForm"/> class.
     /// </summary>
@@ -27,8 +30,38 @@ public partial class NavigationForm : Form, ISetNavigation, IUseNavigation
     [Category("ReactiveMarbles")]
     [Description("A value indicating if Navigating back is enabled.")]
     [Bindable(true)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public bool NavigateBackIsEnabled { get; set; }
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Localizable(true)]
+    public bool NavigateBackIsEnabled
+    {
+        get => _navigateBackIsEnabled;
+        set
+        {
+            _navigateBackIsEnabled = value;
+            NavigationFrame.NavigateBackIsEnabled = _navigateBackIsEnabled;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the navigation frame dock.
+    /// </summary>
+    /// <value>
+    /// The navigation frame dock.
+    /// </value>
+    [Category("ReactiveMarbles")]
+    [Description("A value indicating the dock style.")]
+    [Bindable(true)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    [Localizable(true)]
+    public DockStyle NavigationFrameDock
+    {
+        get => _navigationFrameDock;
+        set
+        {
+            _navigationFrameDock = value;
+            NavigationFrame.Dock = _navigationFrameDock;
+        }
+    }
 
     /// <summary>
     /// Gets the can navigate back.
@@ -54,9 +87,14 @@ public partial class NavigationForm : Form, ISetNavigation, IUseNavigation
     {
         SuspendLayout();
         NavigationFrame.HostName = Name;
-        this.SetMainNavigationHost(NavigationFrame);
-        NavigationFrame.Setup();
-        NavigationFrame.Dock = DockStyle.Fill;
+        if (!DesignMode)
+        {
+            this.SetMainNavigationHost(NavigationFrame);
+            NavigationFrame.Setup();
+        }
+
+        NavigationFrame.NavigateBackIsEnabled = NavigateBackIsEnabled;
+        NavigationFrame.Dock = NavigationFrameDock;
         Controls.Add(NavigationFrame);
         ResumeLayout();
         base.OnLoad(e);

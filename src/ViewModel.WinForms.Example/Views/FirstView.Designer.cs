@@ -28,9 +28,55 @@ partial class FirstView
     /// </summary>
     private void InitializeComponent()
     {
-        components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        label1 = new Label();
+        GotoMain = new Button();
+        GotoFirst = new Button();
+        SuspendLayout();
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new Point(34, 56);
+        label1.Name = "label1";
+        label1.Size = new Size(87, 25);
+        label1.TabIndex = 0;
+        label1.Text = "First View";
+        // 
+        // GotoMain
+        // 
+        GotoMain.Location = new Point(396, 108);
+        GotoMain.Name = "GotoMain";
+        GotoMain.Size = new Size(112, 34);
+        GotoMain.TabIndex = 1;
+        GotoMain.Text = "Goto Main";
+        GotoMain.UseVisualStyleBackColor = true;
+        // 
+        // GotoFirst
+        // 
+        GotoFirst.Location = new Point(397, 171);
+        GotoFirst.Name = "GotoFirst";
+        GotoFirst.Size = new Size(112, 34);
+        GotoFirst.TabIndex = 2;
+        GotoFirst.Text = "Goto First";
+        GotoFirst.UseVisualStyleBackColor = true;
+        // 
+        // FirstView
+        // 
+        AutoScaleDimensions = new SizeF(10F, 25F);
+        AutoScaleMode = AutoScaleMode.Font;
+        BackColor = Color.Pink;
+        Controls.Add(GotoFirst);
+        Controls.Add(GotoMain);
+        Controls.Add(label1);
+        Name = "FirstView";
+        Size = new Size(932, 570);
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
+
+    private Label label1;
+    private Button GotoMain;
+    private Button GotoFirst;
 }
