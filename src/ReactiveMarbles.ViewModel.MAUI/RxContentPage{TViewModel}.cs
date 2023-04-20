@@ -48,5 +48,6 @@ public class RxContentPage<TViewModel> : ContentPage, IAmViewFor<TViewModel>
         ViewModel = BindingContext as TViewModel;
     }
 
-    private static void OnViewModelChanged(BindableObject bindableObject, object oldValue, object newValue) => bindableObject.BindingContext = newValue;
+    private static void OnViewModelChanged(BindableObject bindableObject, object oldValue, object newValue) =>
+        bindableObject.BindingContext = newValue;
 }

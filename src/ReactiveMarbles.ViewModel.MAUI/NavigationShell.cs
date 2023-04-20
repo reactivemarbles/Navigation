@@ -264,7 +264,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     /// <summary>
     /// Setups this instance.
     /// </summary>
-    /// <exception cref="System.ArgumentNullException">NavigationShell Name not set.</exception>
+    /// <exception cref="ArgumentNullException">NavigationShell Name not set.</exception>
     public void Setup()
     {
         if (string.IsNullOrWhiteSpace(Name))

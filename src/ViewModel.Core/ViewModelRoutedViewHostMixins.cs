@@ -12,7 +12,6 @@ using ReactiveMarbles.Extensions;
 [assembly: InternalsVisibleTo("ReactiveMarbles.ViewModel.Wpf")]
 [assembly: InternalsVisibleTo("ReactiveMarbles.ViewModel.WinForms")]
 [assembly: InternalsVisibleTo("ReactiveMarbles.ViewModel.MAUI")]
-[assembly: InternalsVisibleTo("ReactiveMarbles.ViewModel.WinUI")]
 [assembly: InternalsVisibleTo("ReactiveMarbles.ViewModel.Avalonia")]
 
 namespace ReactiveMarbles.ViewModel.Core;

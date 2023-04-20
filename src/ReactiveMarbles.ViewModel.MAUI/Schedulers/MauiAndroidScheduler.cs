@@ -1,0 +1,99 @@
+﻿// Copyright (c) 2019-2023 ReactiveUI Association Incorporated. All rights reserved.
+// ReactiveUI Association Incorporated licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for full license information.
+
+#if MAUIANDROID
+using System;
+using System.Reactive.Disposables;
+using Android.OS;
+
+namespace System.Reactive.Concurrency;
+
+/// <summary>
+/// MauiAndroidScheduler is a scheduler that schedules items on a running
+/// Activity's main thread. This is the moral equivalent of
+/// DispatcherScheduler.
+/// </summary>
+public class MauiAndroidScheduler : IScheduler
+{
+    private readonly Handler _handler;
+    private readonly long _looperId;
+
+    static MauiAndroidScheduler() =>
+        MainThreadScheduler = new MauiAndroidScheduler(new Handler(Looper.MainLooper!), Looper.MainLooper?.Thread?.Id);
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MauiAndroidScheduler"/> class.
+    /// </summary>
+    /// <param name="handler">The handler.</param>
+    /// <param name="threadIdAssociatedWithHandler">The thread identifier associated with handler.</param>
+    public MauiAndroidScheduler(Handler handler, long? threadIdAssociatedWithHandler)
+    {
+        _handler = handler;
+        _looperId = threadIdAssociatedWithHandler ?? -1;
+    }
+
+    /// <summary>
+    /// Gets a common instance to avoid allocations to the MainThread for the MauiAndroidScheduler.
+    /// </summary>
+    public static IScheduler MainThreadScheduler { get; }
+
+    /// <inheritdoc/>
+    public DateTimeOffset Now => DateTimeOffset.Now;
+
+    /// <inheritdoc/>
+    public IDisposable Schedule<TState>(TState state, Func<IScheduler, TState, IDisposable> action)
+    {
+        var isCancelled = false;
+        var innerDisp = new SerialDisposable() { Disposable = Disposable.Empty };
+
+        _handler.Post(() =>
+        {
+            if (isCancelled)
+            {
+                return;
+            }
+
+            innerDisp.Disposable = action(this, state);
+        });
+
+        return new CompositeDisposable(
+                                       Disposable.Create(() => isCancelled = true),
+                                       innerDisp);
+    }
+
+    /// <inheritdoc/>
+    public IDisposable Schedule<TState>(TState state, TimeSpan dueTime, Func<IScheduler, TState, IDisposable> action) // TODO: Create Test
+    {
+        var isCancelled = false;
+        var innerDisp = new SerialDisposable() { Disposable = Disposable.Empty };
+
+        _handler.PostDelayed(
+                             () =>
+                             {
+                                 if (isCancelled)
+                                 {
+                                     return;
+                                 }
+
+                                 innerDisp.Disposable = action(this, state);
+                             },
+                             dueTime.Ticks / 10 / 1000);
+
+        return new CompositeDisposable(
+                                       Disposable.Create(() => isCancelled = true),
+                                       innerDisp);
+    }
+
+    /// <inheritdoc/>
+    public IDisposable Schedule<TState>(TState state, DateTimeOffset dueTime, Func<IScheduler, TState, IDisposable> action) // TODO: Create Test
+    {
+        if (dueTime <= Now)
+        {
+            return Schedule(state, action);
+        }
+
+        return Schedule(state, dueTime - Now, action);
+    }
+}
+#endif

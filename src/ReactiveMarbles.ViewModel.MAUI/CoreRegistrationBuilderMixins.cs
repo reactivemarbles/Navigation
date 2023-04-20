@@ -17,7 +17,7 @@ public static class CoreRegistrationBuilderMixins
     /// </summary>
     /// <param name="builder">The builder.</param>
     /// <returns>The Builder.</returns>
-    /// <exception cref="System.ArgumentNullException">builder.</exception>
+    /// <exception cref="ArgumentNullException">builder.</exception>
     public static CoreRegistrationBuilder UseMauiThreadSchedulers(this CoreRegistrationBuilder builder)
     {
         if (builder == null)
@@ -25,6 +25,13 @@ public static class CoreRegistrationBuilderMixins
             throw new ArgumentNullException(nameof(builder));
         }
 
-        return builder.WithMainThreadScheduler(Scheduler.Default).WithTaskPoolScheduler(TaskPoolScheduler.Default);
+#if WINUI
+        builder.WithMainThreadScheduler(new MauiDispatcherScheduler(() => MauiWinUIScheduler.Current));
+#elif MAUIANDROID
+        builder.WithMainThreadScheduler(MauiAndroidScheduler.MainThreadScheduler);
+#elif MAUIMAC
+        builder.WithMainThreadScheduler(new MauiDispatcherScheduler(() => new MauiMacScheduler()));
+#endif
+        return builder.WithTaskPoolScheduler(TaskPoolScheduler.Default);
     }
 }

@@ -10,7 +10,7 @@ namespace ReactiveMarbles.ViewModel.MAUI;
 /// ReactiveShell.
 /// </summary>
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
-/// <seealso cref="Microsoft.Maui.Controls.Shell" />
+/// <seealso cref="Shell" />
 public class RxShell<TViewModel> : Shell, IAmViewFor<TViewModel>
     where TViewModel : class, IRxObject
 {

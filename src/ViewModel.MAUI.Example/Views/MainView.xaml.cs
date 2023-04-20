@@ -2,6 +2,7 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+using ReactiveMarbles.Locator;
 using ReactiveMarbles.ViewModel.MAUI;
 
 namespace ViewModel.MAUI.Example;
@@ -10,7 +11,7 @@ namespace ViewModel.MAUI.Example;
 /// MainView.
 /// </summary>
 [XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class MainView : RxContentPage<MainViewModel>
+public partial class MainView
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="MainView" /> class.
@@ -18,8 +19,8 @@ public partial class MainView : RxContentPage<MainViewModel>
     public MainView()
     {
         InitializeComponent();
-        ////ViewModel ??= Locator.Current.GetService<MainViewModel>();
-        ////this.BindCommand(ViewModel, vm => vm.GotoMain, v => v.GotoMain).DisposeWith(d);
-        ////this.BindCommand(ViewModel, vm => vm.GotoFirst, v => v.GotoFirst).DisposeWith(d);
+        ViewModel ??= ServiceLocator.Current().GetService<MainViewModel>();
+        GotoMain.Command = ViewModel.GotoMain;
+        GotoFirst.Command = ViewModel.GotoFirst;
     }
 }
