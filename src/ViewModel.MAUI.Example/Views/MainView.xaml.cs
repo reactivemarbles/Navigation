@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for full license information.
 
 using ReactiveMarbles.Locator;
-using ReactiveMarbles.ViewModel.MAUI;
+using ReactiveMarbles.ViewModel.Core;
 
 namespace ViewModel.MAUI.Example;
 
@@ -19,8 +19,16 @@ public partial class MainView
     public MainView()
     {
         InitializeComponent();
+    }
+
+    /// <summary>
+    /// Called when [appearing].
+    /// </summary>
+    protected override void OnAppearing()
+    {
         ViewModel ??= ServiceLocator.Current().GetService<MainViewModel>();
         GotoMain.Command = ViewModel.GotoMain;
         GotoFirst.Command = ViewModel.GotoFirst;
+        base.OnAppearing();
     }
 }

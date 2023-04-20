@@ -35,7 +35,7 @@ public partial class App : Application
         ServiceLocator.Current().AddSingleton<FirstViewModel>(() => new());
         ServiceLocator.Current().AddNavigationView<FirstView, FirstViewModel>();
 
-        ServiceLocator.Current().SetupComplete();
         MainPage = new AppShell();
+        ServiceLocator.Current().SetupComplete();
     }
 }

@@ -21,7 +21,7 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// </summary>
 public static class ViewModelRoutedViewHostMixins
 {
-    internal static Subject<Unit> ASetupCompleted { get; } = new();
+    internal static ReplaySubject<Unit> ASetupCompleted { get; } = new(1);
 
     internal static Dictionary<string, CompositeDisposable> CurrentViewDisposable { get; } = new();
 
@@ -101,13 +101,14 @@ public static class ViewModelRoutedViewHostMixins
                      if (hostName.Length == 0)
                      {
                          NavigationHost.First().Value.CanNavigateBackObservable
+                         .DistinctUntilChanged()
                          .Subscribe(x => obs.OnNext(x))
                          .DisposeWith(dis);
                      }
-
-                     if (NavigationHost.TryGetValue(hostName, out var value))
+                     else if (NavigationHost.TryGetValue(hostName, out var value))
                      {
                          value.CanNavigateBackObservable
+                         .DistinctUntilChanged()
                          .Subscribe(x => obs.OnNext(x))
                          .DisposeWith(dis);
                      }

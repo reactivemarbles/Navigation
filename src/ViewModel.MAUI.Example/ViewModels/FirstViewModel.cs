@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Windows.Input;
 using ReactiveMarbles.Command;
@@ -32,7 +33,7 @@ namespace ViewModel.MAUI.Example
         /// <value>
         /// The goto main.
         /// </value>
-        public ICommand? GotoMain { get; }
+        public RxCommand<Unit, Unit> GotoMain { get; }
 
         /// <summary>
         /// Gets the goto first.
@@ -40,7 +41,7 @@ namespace ViewModel.MAUI.Example
         /// <value>
         /// The goto first.
         /// </value>
-        public ICommand? GotoFirst { get; }
+        public RxCommand<Unit, Unit> GotoFirst { get; }
 
         /// <summary>
         /// WhenNavigatedTo.
