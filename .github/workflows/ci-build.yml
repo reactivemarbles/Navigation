@@ -45,6 +45,12 @@ jobs:
             6.0.x
             7.0.x
 
+    - name: Install DotNet workloads
+      if: inputs.installWorkflows == true
+      shell: bash
+      run: |
+        dotnet workload install android ios tvos macos maui maccatalyst
+
     - name: NBGV
       id: nbgv
       uses: dotnet/nbgv@master
