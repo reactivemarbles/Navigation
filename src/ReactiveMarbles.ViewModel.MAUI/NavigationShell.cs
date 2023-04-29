@@ -226,13 +226,14 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
             var count = NavigationStack.Count;
             _toViewModel = NavigationStack[count - 2];
 
+            var ea = new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.Back, _lastView, Name, parameter);
             if (_currentView is INotifiyNavigation { ISetupNavigating: true })
             {
-                ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.Back, _lastView, Name, parameter));
+                ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(ea);
             }
             else
             {
-                ViewModelRoutedViewHostMixins.ResultNavigating[Name].OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.Back, _lastView, Name, parameter));
+                ViewModelRoutedViewHostMixins.ResultNavigating[Name].OnNext(ea);
             }
         }
 
@@ -485,13 +486,13 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
         // NOTE: This gets a new instance of the View
         _currentView = ServiceLocator.Current().GetView<T>(contract);
 
+        var ea = new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, Name, parameter);
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {
-            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, Name, parameter));
+            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(ea);
         }
         else
         {
-            var ea = new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, Name, parameter);
             ViewModelRoutedViewHostMixins.ResultNavigating[Name].OnNext(ea);
         }
     }
@@ -505,13 +506,13 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
         // NOTE: This gets a new instance of the View
         _currentView = ServiceLocator.Current().GetView(viewModel);
 
+        var ea = new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, Name, parameter);
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {
-            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, Name, parameter));
+            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(ea);
         }
         else
         {
-            var ea = new ViewModelNavigatingEventArgs(__currentViewModel, _toViewModel, NavigationType.New, _currentView, Name, parameter);
             ViewModelRoutedViewHostMixins.ResultNavigating[Name].OnNext(ea);
         }
     }

@@ -2,7 +2,9 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+#if DEBUG
 using Microsoft.Extensions.Logging;
+#endif
 
 namespace ViewModel.MAUI.Example;
 
@@ -27,7 +29,7 @@ public static class MauiProgram
             });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
         return builder.Build();

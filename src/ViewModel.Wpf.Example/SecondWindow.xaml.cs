@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for full license information.
 
 using System;
-using System.Reactive.Disposables;
 using ReactiveMarbles.Command;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.Core;

@@ -21,6 +21,8 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// </summary>
 public static class ViewModelRoutedViewHostMixins
 {
+#pragma warning disable RCS1175 // Unused 'this' parameter.
+
     internal static ReplaySubject<Unit> ASetupCompleted { get; } = new(1);
 
     internal static Dictionary<string, CompositeDisposable> CurrentViewDisposable { get; } = new();
@@ -564,4 +566,5 @@ public static class ViewModelRoutedViewHostMixins
                 }).DisposeWith(dis);
                 return dis;
             });
+#pragma warning restore RCS1175 // Unused 'this' parameter.
 }

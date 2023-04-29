@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for full license information.
 
 using System.Collections.ObjectModel;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using ReactiveMarbles.Locator;
@@ -208,13 +207,14 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
 
             _toViewModel = NavigationStack[count];
 
+            var ea = new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.Back, _lastView, HostName, parameter);
             if (_currentView is INotifiyNavigation { ISetupNavigating: true })
             {
-                ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.Back, _lastView, HostName, parameter));
+                ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(ea);
             }
             else
             {
-                ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.Back, _lastView, HostName, parameter));
+                ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(ea);
             }
         }
 
@@ -332,13 +332,13 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
         // NOTE: This gets a new instance of the View
         _currentView = ServiceLocator.Current().GetView<T>(contract);
 
+        var ea = new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {
-            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter));
+            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(ea);
         }
         else
         {
-            var ea = new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
             ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(ea);
         }
     }
@@ -351,13 +351,13 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
         // NOTE: This gets a new instance of the View
         _currentView = ServiceLocator.Current().GetView(viewModel);
 
+        var ea = new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
         if (_currentView is INotifiyNavigation { ISetupNavigating: true })
         {
-            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter));
+            ViewModelRoutedViewHostMixins.SetWhenNavigating.OnNext(ea);
         }
         else
         {
-            var ea = new ViewModelNavigatingEventArgs(_currentViewModel, _toViewModel, NavigationType.New, _currentView, HostName, parameter);
             ViewModelRoutedViewHostMixins.ResultNavigating[HostName].OnNext(ea);
         }
     }

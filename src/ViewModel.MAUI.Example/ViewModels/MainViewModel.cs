@@ -2,11 +2,9 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
-using System;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Disposables;
-using System.Windows.Input;
 using ReactiveMarbles.Command;
 using ReactiveMarbles.ViewModel.Core;
 using RxObject = ReactiveMarbles.ViewModel.Core.RxObject;

@@ -2,6 +2,7 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+#if !DESIGN
 using ReactiveMarbles.Command;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.Mvvm;
@@ -9,6 +10,7 @@ using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.Core;
 using ReactiveMarbles.ViewModel.WinForms;
 using ViewModel.Wpf.Example;
+#endif
 
 namespace ViewModel.WinForms.Example;
 

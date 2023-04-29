@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for full license information.
 
 using ReactiveMarbles.Locator;
-using ReactiveMarbles.ViewModel.Core;
 
 namespace ViewModel.MAUI.Example;
 
@@ -16,10 +15,7 @@ public partial class MainView
     /// <summary>
     /// Initializes a new instance of the <see cref="MainView" /> class.
     /// </summary>
-    public MainView()
-    {
-        InitializeComponent();
-    }
+    public MainView() => InitializeComponent();
 
     /// <summary>
     /// Called when [appearing].
