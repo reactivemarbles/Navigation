@@ -15,7 +15,7 @@ public interface IViewModelNavigationBaseEventArgs
     /// <value>
     /// From.
     /// </value>
-    IRxObject? From { get; }
+    IRxNavBase? From { get; }
 
     /// <summary>
     /// Gets the navigation parameter.
@@ -31,5 +31,5 @@ public interface IViewModelNavigationBaseEventArgs
     /// <value>
     /// To.
     /// </value>
-    IRxObject? To { get; }
+    IRxNavBase? To { get; }
 }

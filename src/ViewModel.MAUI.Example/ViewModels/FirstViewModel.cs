@@ -13,7 +13,7 @@ namespace ViewModel.MAUI.Example
     /// <summary>
     /// FirstViewModel.
     /// </summary>
-    public class FirstViewModel : RxObject
+    public class FirstViewModel : RxNavBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FirstViewModel"/> class.
@@ -31,7 +31,7 @@ namespace ViewModel.MAUI.Example
         /// <value>
         /// The goto main.
         /// </value>
-        public RxCommand<Unit, Unit> GotoMain { get; }
+        public RxCommand<Unit, IUseHostedNavigation> GotoMain { get; }
 
         /// <summary>
         /// Gets the goto first.
@@ -39,7 +39,7 @@ namespace ViewModel.MAUI.Example
         /// <value>
         /// The goto first.
         /// </value>
-        public RxCommand<Unit, Unit> GotoFirst { get; }
+        public RxCommand<Unit, IUseHostedNavigation> GotoFirst { get; }
 
         /// <summary>
         /// WhenNavigatedTo.

@@ -10,13 +10,13 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// Rx Object.
 /// </summary>
 /// <seealso cref="Mvvm.RxObject" />
-/// <seealso cref="IRxObject" />
-public abstract class RxObject : Mvvm.RxObject, IRxObject
+/// <seealso cref="IRxNavBase" />
+public abstract class RxNavBase : Mvvm.RxObject, IRxNavBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="RxObject"/> class.
+    /// Initializes a new instance of the <see cref="RxNavBase"/> class.
     /// </summary>
-    protected RxObject()
+    protected RxNavBase()
     {
     }
 
@@ -32,7 +32,7 @@ public abstract class RxObject : Mvvm.RxObject, IRxObject
     /// Gets a value indicating whether this instance is disposed.
     /// </summary>
     /// <value><c>true</c> if this instance is disposed; otherwise, <c>false</c>.</value>
-    public bool IsDisposed => Disposables.IsDisposed;
+    public bool IsDisposed => Disposables?.IsDisposed == true;
 
     /// <summary>
     /// Gets the disposables.
@@ -76,7 +76,7 @@ public abstract class RxObject : Mvvm.RxObject, IRxObject
     /// </param>
     protected virtual void Dispose(bool disposing)
     {
-        if (Disposables?.IsDisposed == false && disposing)
+        if (!IsDisposed && disposing)
         {
             Disposables?.Dispose();
         }

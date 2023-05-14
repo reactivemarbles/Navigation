@@ -10,6 +10,6 @@ namespace ReactiveMarbles.ViewModel.Core;
 /// interface for RxBase.
 /// </summary>
 /// <seealso cref="System.IDisposable"/>
-public interface IRxObject : INotifiyRoutableViewModel, ICancelable, IAmBuilt
+public interface IRxNavBase : INotifiyRoutableViewModel, ICancelable, IAmBuilt
 {
 }

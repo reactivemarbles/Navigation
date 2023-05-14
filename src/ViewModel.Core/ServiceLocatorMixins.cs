@@ -19,7 +19,7 @@ public static class ServiceLocatorMixins
     /// <param name="serviceLocator">The service locator.</param>
     public static void AddNavigationView<TView, TViewModel>(this IServiceLocator serviceLocator)
        where TView : class, IAmViewFor<TViewModel>, new()
-       where TViewModel : class, IRxObject
+       where TViewModel : class, IRxNavBase
     {
         if (serviceLocator == null)
         {
@@ -41,7 +41,7 @@ public static class ServiceLocatorMixins
     /// <exception cref="System.ArgumentNullException">serviceLocator.</exception>
     public static void AddNavigationView<TView, TViewModel>(this IServiceLocator serviceLocator, string contract)
        where TView : class, IAmViewFor<TViewModel>, new()
-       where TViewModel : class, IRxObject
+       where TViewModel : class, IRxNavBase
     {
         if (serviceLocator == null)
         {
@@ -64,7 +64,7 @@ public static class ServiceLocatorMixins
     /// </returns>
     /// <exception cref="System.ArgumentNullException">serviceLocator.</exception>
     public static IAmViewFor? GetView<T>(this IServiceLocator serviceLocator, string? contract = null)
-        where T : class, IRxObject
+        where T : class, IRxNavBase
     {
         if (serviceLocator == null)
         {
@@ -83,7 +83,7 @@ public static class ServiceLocatorMixins
     /// An instance.
     /// </returns>
     /// <exception cref="System.ArgumentNullException">serviceLocator.</exception>
-    public static IAmViewFor? GetView(this IServiceLocator serviceLocator, IRxObject viewModel)
+    public static IAmViewFor? GetView(this IServiceLocator serviceLocator, IRxNavBase viewModel)
     {
         if (serviceLocator == null)
         {

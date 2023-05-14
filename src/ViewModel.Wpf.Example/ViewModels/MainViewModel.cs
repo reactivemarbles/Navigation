@@ -15,7 +15,7 @@ namespace ViewModel.Wpf.Example;
 /// <summary>
 /// MainViewModel.
 /// </summary>
-public class MainViewModel : RxObject
+public class MainViewModel : RxNavBase
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.

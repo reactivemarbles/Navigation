@@ -3,7 +3,7 @@
 namespace ReactiveMarbles.ViewModel.WinForms;
 
 partial class RxForm<TViewModel>
-    where TViewModel : class, IRxObject
+    where TViewModel : class, IRxNavBase
 {
     /// <summary>
     /// Required designer variable.

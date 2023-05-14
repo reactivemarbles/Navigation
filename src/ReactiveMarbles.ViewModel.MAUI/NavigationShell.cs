@@ -10,7 +10,6 @@ using DynamicData;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.Mvvm;
 using ReactiveMarbles.ViewModel.Core;
-using IRxObject = ReactiveMarbles.ViewModel.Core.IRxObject;
 
 namespace ReactiveMarbles.ViewModel.MAUI;
 
@@ -50,12 +49,12 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
 
     private readonly ISubject<bool> _canNavigateBackSubject = new Subject<bool>();
     private readonly ISubject<INotifiyRoutableViewModel> _currentViewModel = new Subject<INotifiyRoutableViewModel>();
-    private IRxObject? __currentViewModel;
+    private IRxNavBase? __currentViewModel;
     private IAmViewFor? _currentView;
     private IAmViewFor? _lastView;
     private bool _navigateBack;
     private bool _resetStack;
-    private IRxObject? _toViewModel;
+    private IRxNavBase? _toViewModel;
     private bool _userInstigated;
     private bool _cleaningNavigation;
     private ICoreRegistration? _coreRegistration;
@@ -66,7 +65,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     public NavigationShell() =>
         CurrentViewModel.Subscribe(vm =>
             {
-                if (vm is IRxObject rxo && _userInstigated)
+                if (vm is IRxNavBase rxo && _userInstigated)
                 {
                     __currentViewModel = rxo;
                     if (!_navigateBack)
@@ -155,7 +154,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     /// <value>
     /// The navigation stack.
     /// </value>
-    public ObservableCollection<IRxObject?> NavigationStack { get; } = new();
+    public ObservableCollection<IRxNavBase?> NavigationStack { get; } = new();
 
     /// <summary>
     /// Gets a value indicating whether [requires setup].
@@ -177,14 +176,14 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
     public void Navigate<T>(string? contract = null, object? parameter = null)
-        where T : class, IRxObject => InternalNavigate<T>(contract, parameter);
+        where T : class, IRxNavBase => InternalNavigate<T>(contract, parameter);
 
     /// <summary>
     /// Navigates the specified contract.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
     /// <param name="parameter">The parameter.</param>
-    public void Navigate(IRxObject viewModel, object? parameter = null)
+    public void Navigate(IRxNavBase viewModel, object? parameter = null)
         => InternalNavigate(viewModel, parameter);
 
     /// <summary>
@@ -194,7 +193,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
     public void NavigateAndReset<T>(string? contract = null, object? parameter = null)
-        where T : class, IRxObject
+        where T : class, IRxNavBase
     {
         _resetStack = true;
         InternalNavigate<T>(contract, parameter);
@@ -205,7 +204,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     /// </summary>
     /// <param name="viewModel">The view model.</param>
     /// <param name="parameter">The parameter.</param>
-    public void NavigateAndReset(IRxObject viewModel, object? parameter = null)
+    public void NavigateAndReset(IRxNavBase viewModel, object? parameter = null)
     {
         _resetStack = true;
         InternalNavigate(viewModel, parameter);
@@ -359,7 +358,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
                             page.ViewModel ??= vm;
                         }
 
-                        if (navigatingForward && page.ViewModel is IRxObject pvm)
+                        if (navigatingForward && page.ViewModel is IRxNavBase pvm)
                         {
                             NavigationStack?.Add(pvm);
                         }
@@ -390,7 +389,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
                     var callVmNavTo = toView == null || !toView!.ISetupNavigatedTo;
                     var callVmNavFrom = fromView == null || !fromView!.ISetupNavigatedTo;
                     var cvm = __currentViewModel;
-                    _toViewModel ??= e.View?.ViewModel as IRxObject;
+                    _toViewModel ??= e.View?.ViewModel as IRxNavBase;
                     var tvm = _toViewModel;
 
                     if (_navigateBack)
@@ -477,7 +476,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     }
 
     private void InternalNavigate<T>(string? contract, object? parameter)
-        where T : class, IRxObject
+        where T : class, IRxNavBase
     {
         _userInstigated = true;
         _toViewModel = ServiceLocator.Current().GetServiceWithContract<T>(contract);
@@ -497,7 +496,7 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
         }
     }
 
-    private void InternalNavigate(IRxObject viewModel, object? parameter)
+    private void InternalNavigate(IRxNavBase viewModel, object? parameter)
     {
         _userInstigated = true;
         _toViewModel = viewModel;

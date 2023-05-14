@@ -12,7 +12,7 @@ namespace ReactiveMarbles.ViewModel.WinForms;
 /// </summary>
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
 public partial class RxForm<TViewModel> : Form, IAmViewFor<TViewModel>
-where TViewModel : class, IRxObject
+where TViewModel : class, IRxNavBase
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="RxForm{TViewModel}"/> class.

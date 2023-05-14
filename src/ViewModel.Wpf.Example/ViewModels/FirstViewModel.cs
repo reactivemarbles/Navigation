@@ -15,8 +15,8 @@ namespace ViewModel.Wpf.Example;
 /// <summary>
 /// FirstViewModel.
 /// </summary>
-/// <seealso cref="RxObject" />
-public class FirstViewModel : RxObject
+/// <seealso cref="RxNavBase" />
+public class FirstViewModel : RxNavBase
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="FirstViewModel"/> class.

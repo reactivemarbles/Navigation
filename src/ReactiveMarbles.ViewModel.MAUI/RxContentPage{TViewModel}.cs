@@ -12,7 +12,7 @@ namespace ReactiveMarbles.ViewModel.MAUI;
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
 /// <seealso cref="ContentPage" />
 public class RxContentPage<TViewModel> : ContentPage, IAmViewFor<TViewModel>
-    where TViewModel : class, IRxObject
+    where TViewModel : class, IRxNavBase
 {
     /// <summary>
     /// The view model bindable property.

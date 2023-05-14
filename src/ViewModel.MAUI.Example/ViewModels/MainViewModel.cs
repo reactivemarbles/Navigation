@@ -7,14 +7,14 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using ReactiveMarbles.Command;
 using ReactiveMarbles.ViewModel.Core;
-using RxObject = ReactiveMarbles.ViewModel.Core.RxObject;
+using RxNavBase = ReactiveMarbles.ViewModel.Core.RxNavBase;
 
 namespace ViewModel.MAUI.Example
 {
     /// <summary>
     /// MainViewModel.
     /// </summary>
-    public class MainViewModel : RxObject
+    public class MainViewModel : RxNavBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -32,7 +32,7 @@ namespace ViewModel.MAUI.Example
         /// <value>
         /// The goto first.
         /// </value>
-        public RxCommand<Unit, Unit> GotoFirst { get; }
+        public RxCommand<Unit, IUseHostedNavigation> GotoFirst { get; }
 
         /// <summary>
         /// Gets the goto main.
@@ -40,7 +40,7 @@ namespace ViewModel.MAUI.Example
         /// <value>
         /// The goto main.
         /// </value>
-        public RxCommand<Unit, Unit> GotoMain { get; }
+        public RxCommand<Unit, IUseHostedNavigation> GotoMain { get; }
 
         /// <summary>
         /// WhenNavigatedTo.

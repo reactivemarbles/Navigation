@@ -8,7 +8,6 @@ using System.Reactive.Subjects;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.Mvvm;
 using ReactiveMarbles.ViewModel.Core;
-using IRxObject = ReactiveMarbles.ViewModel.Core.IRxObject;
 
 namespace ReactiveMarbles.ViewModel.WinForms;
 
@@ -21,12 +20,12 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
 {
     private readonly ISubject<bool> _canNavigateBackSubject = new Subject<bool>();
     private readonly ISubject<INotifiyRoutableViewModel> _currentViewModelSubject = new Subject<INotifiyRoutableViewModel>();
-    private IRxObject? _currentViewModel;
+    private IRxNavBase? _currentViewModel;
     private IAmViewFor? _currentView;
     private IAmViewFor? _lastView;
     private bool _navigateBack;
     private bool _resetStack;
-    private IRxObject? _toViewModel;
+    private IRxNavBase? _toViewModel;
     private Control? _content;
     private ICoreRegistration? _coreRegistration;
 
@@ -38,9 +37,9 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
         InitializeComponent();
         CurrentViewModel.Subscribe(vm =>
         {
-            if (vm is IRxObject && !_navigateBack)
+            if (vm is IRxNavBase && !_navigateBack)
             {
-                _currentViewModel = vm as IRxObject;
+                _currentViewModel = vm as IRxNavBase;
                 NavigationStack.Add(_currentViewModel);
             }
 
@@ -60,7 +59,7 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
     /// <value>
     /// The navigation stack.
     /// </value>
-    public ObservableCollection<IRxObject?> NavigationStack { get; } = new();
+    public ObservableCollection<IRxNavBase?> NavigationStack { get; } = new();
 
     /// <summary>
     /// Gets the current view model.
@@ -146,14 +145,14 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
     public void Navigate<T>(string? contract = null, object? parameter = null)
-        where T : class, IRxObject => InternalNavigate<T>(contract, parameter);
+        where T : class, IRxNavBase => InternalNavigate<T>(contract, parameter);
 
     /// <summary>
     /// Navigates the ViewModel contract.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
     /// <param name="parameter">The parameter.</param>
-    public void Navigate(IRxObject viewModel, object? parameter = null)
+    public void Navigate(IRxNavBase viewModel, object? parameter = null)
     {
         if (viewModel is null)
         {
@@ -170,7 +169,7 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
     public void NavigateAndReset<T>(string? contract = null, object? parameter = null)
-        where T : class, IRxObject
+        where T : class, IRxNavBase
     {
         _resetStack = true;
         InternalNavigate<T>(contract, parameter);
@@ -181,7 +180,7 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
     /// </summary>
     /// <param name="viewModel">The view model.</param>
     /// <param name="parameter">The parameter.</param>
-    public void NavigateAndReset(IRxObject viewModel, object? parameter = null)
+    public void NavigateAndReset(IRxNavBase viewModel, object? parameter = null)
     {
         if (viewModel is null)
         {
@@ -273,7 +272,7 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
                 var callVmNavTo = toView == null || !toView!.ISetupNavigatedTo;
                 var callVmNavFrom = fromView == null || !fromView!.ISetupNavigatedTo;
                 var cvm = _currentViewModel;
-                _toViewModel ??= e.View?.ViewModel as IRxObject;
+                _toViewModel ??= e.View?.ViewModel as IRxNavBase;
                 var tvm = _toViewModel;
 
                 if (_navigateBack)
@@ -324,7 +323,7 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
     }
 
     private void InternalNavigate<T>(string? contract, object? parameter)
-        where T : class, IRxObject
+        where T : class, IRxNavBase
     {
         _toViewModel = ServiceLocator.Current().GetServiceWithContract<T>(contract);
         _lastView = _currentView;
@@ -343,7 +342,7 @@ public partial class ViewModelRoutedViewHost : UserControl, IViewModelRoutedView
         }
     }
 
-    private void InternalNavigate(IRxObject viewModel, object? parameter)
+    private void InternalNavigate(IRxNavBase viewModel, object? parameter)
     {
         _toViewModel = viewModel;
         _lastView = _currentView;

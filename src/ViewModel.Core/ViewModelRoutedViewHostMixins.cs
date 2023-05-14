@@ -41,7 +41,10 @@ public static class ViewModelRoutedViewHostMixins
     /// Determines whether this instance [can navigate back] the specified this.
     /// </summary>
     /// <param name="this">The this.</param>
-    /// <returns>A bool.</returns>
+    /// <returns>
+    /// A bool.
+    /// </returns>
+    /// <exception cref="System.ArgumentNullException">this.</exception>
     public static IObservable<bool> CanNavigateBack(this IUseNavigation @this)
     {
         if (@this == null)
@@ -86,6 +89,7 @@ public static class ViewModelRoutedViewHostMixins
     /// <returns>
     /// A bool.
     /// </returns>
+    /// <exception cref="System.ArgumentNullException">this.</exception>
     public static IObservable<bool> CanNavigateBack(this IUseHostedNavigation @this, string hostName = "")
     {
         if (@this == null)
@@ -127,7 +131,12 @@ public static class ViewModelRoutedViewHostMixins
     /// Clears the history.
     /// </summary>
     /// <param name="this">The dummy.</param>
-    public static void ClearHistory(this IUseNavigation @this)
+    /// <returns>
+    /// Chainable host.
+    /// </returns>
+    /// <exception cref="System.ArgumentNullException">this.</exception>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseNavigation ClearHistory(this IUseNavigation @this)
     {
         if (@this == null)
         {
@@ -151,14 +160,18 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>
     /// Clears the history.
     /// </summary>
-    /// <param name="dummy">The dummy.</param>
+    /// <param name="this">The this.</param>
     /// <param name="hostName">Name of the host.</param>
-    public static void ClearHistory(this IUseHostedNavigation dummy, string hostName = "")
+    /// <returns>Chainable host.</returns>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseHostedNavigation ClearHistory(this IUseHostedNavigation @this, string hostName = "")
     {
         if (NavigationHost.Count == 0)
         {
@@ -177,6 +190,8 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>
@@ -184,7 +199,12 @@ public static class ViewModelRoutedViewHostMixins
     /// </summary>
     /// <param name="this">The this.</param>
     /// <param name="parameter">The parameter.</param>
-    public static void NavigateBack(this IUseNavigation @this, object? parameter = null)
+    /// <returns>
+    /// Chainable host.
+    /// </returns>
+    /// <exception cref="System.ArgumentNullException">this.</exception>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseNavigation NavigateBack(this IUseNavigation @this, object? parameter = null)
     {
         if (@this == null)
         {
@@ -212,15 +232,19 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>
     /// Navigates backwards.
     /// </summary>
-    /// <param name="dummy">The dummy.</param>
+    /// <param name="this">The this.</param>
     /// <param name="hostName">Name of the host.</param>
     /// <param name="parameter">The parameter.</param>
-    public static void NavigateBack(this IUseHostedNavigation dummy, string hostName = "", object? parameter = null)
+    /// <returns>Chainable host.</returns>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseHostedNavigation NavigateBack(this IUseHostedNavigation @this, string hostName = "", object? parameter = null)
     {
         if (NavigationHost.Count == 0)
         {
@@ -243,6 +267,8 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>
@@ -252,8 +278,11 @@ public static class ViewModelRoutedViewHostMixins
     /// <param name="this">The this.</param>
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    public static void NavigateToView<T>(this IUseNavigation @this, string? contract = null, object? parameter = null)
-        where T : class, IRxObject
+    /// <returns>Chainable host.</returns>
+    /// <exception cref="System.ArgumentNullException">this.</exception>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseNavigation NavigateToView<T>(this IUseNavigation @this, string? contract = null, object? parameter = null)
+        where T : class, IRxNavBase
     {
         if (@this == null)
         {
@@ -277,18 +306,22 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>
     /// Navigates to view.
     /// </summary>
     /// <typeparam name="T">The Type.</typeparam>
-    /// <param name="dummy">The dummy.</param>
+    /// <param name="this">The this.</param>
     /// <param name="hostName">Name of the host.</param>
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    public static void NavigateToView<T>(this IUseHostedNavigation dummy, string? hostName = "", string? contract = null, object? parameter = null)
-        where T : class, IRxObject
+    /// <returns>Chainable host.</returns>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseHostedNavigation NavigateToView<T>(this IUseHostedNavigation @this, string? hostName = "", string? contract = null, object? parameter = null)
+        where T : class, IRxNavBase
     {
         if (NavigationHost.Count == 0)
         {
@@ -311,6 +344,8 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>
@@ -320,8 +355,11 @@ public static class ViewModelRoutedViewHostMixins
     /// <param name="this">The this.</param>
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    public static void NavigateToViewAndClearHistory<T>(this IUseNavigation @this, string? contract = null, object? parameter = null)
-        where T : class, IRxObject
+    /// <returns>Chainable host.</returns>
+    /// <exception cref="System.ArgumentNullException">this.</exception>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseNavigation NavigateToViewAndClearHistory<T>(this IUseNavigation @this, string? contract = null, object? parameter = null)
+        where T : class, IRxNavBase
     {
         if (@this == null)
         {
@@ -349,18 +387,22 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>
     /// Navigates to view and clear history.
     /// </summary>
     /// <typeparam name="T">The Type.</typeparam>
-    /// <param name="dummy">The dummy.</param>
+    /// <param name="this">The this.</param>
     /// <param name="hostName">Name of the host.</param>
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
-    public static void NavigateToViewAndClearHistory<T>(this IUseHostedNavigation dummy, string hostName = "", string? contract = null, object? parameter = null)
-        where T : class, IRxObject
+    /// <returns>Chainable host.</returns>
+    /// <exception cref="System.InvalidOperationException">No navigation host registered, please ensure that the NavigationShell has a Name.</exception>
+    public static IUseHostedNavigation NavigateToViewAndClearHistory<T>(this IUseHostedNavigation @this, string hostName = "", string? contract = null, object? parameter = null)
+        where T : class, IRxNavBase
     {
         if (NavigationHost.Count == 0)
         {
@@ -383,6 +425,8 @@ public static class ViewModelRoutedViewHostMixins
                     break;
             }
         }
+
+        return @this;
     }
 
     /// <summary>

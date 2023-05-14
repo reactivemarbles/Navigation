@@ -17,7 +17,7 @@ public interface IViewModelRoutedViewHost
     /// <value>
     /// The navigation stack.
     /// </value>
-    ObservableCollection<IRxObject?> NavigationStack { get; }
+    ObservableCollection<IRxNavBase?> NavigationStack { get; }
 
     /// <summary>
     /// Gets the current view model.
@@ -84,14 +84,14 @@ public interface IViewModelRoutedViewHost
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
     void Navigate<T>(string? contract = null, object? parameter = null)
-        where T : class, IRxObject;
+        where T : class, IRxNavBase;
 
     /// <summary>
     /// Navigates the specified contract.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
     /// <param name="parameter">The parameter.</param>
-    void Navigate(IRxObject viewModel, object? parameter = null);
+    void Navigate(IRxNavBase viewModel, object? parameter = null);
 
     /// <summary>
     /// Navigates the and reset.
@@ -100,14 +100,14 @@ public interface IViewModelRoutedViewHost
     /// <param name="contract">The contract.</param>
     /// <param name="parameter">The parameter.</param>
     void NavigateAndReset<T>(string? contract = null, object? parameter = null)
-        where T : class, IRxObject;
+        where T : class, IRxNavBase;
 
     /// <summary>
     /// Navigates the and reset.
     /// </summary>
     /// <param name="viewModel">The view model.</param>
     /// <param name="parameter">The parameter.</param>
-    void NavigateAndReset(IRxObject viewModel, object? parameter = null);
+    void NavigateAndReset(IRxNavBase viewModel, object? parameter = null);
 
     /// <summary>
     /// Navigates the back.

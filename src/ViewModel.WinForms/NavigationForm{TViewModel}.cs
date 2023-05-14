@@ -16,7 +16,7 @@ namespace ReactiveMarbles.ViewModel.WinForms;
 /// <seealso cref="System.Windows.Forms.Form" />
 /// <seealso cref="ReactiveMarbles.ViewModel.Core.IAmViewFor&lt;TViewModel&gt;" />
 public partial class NavigationForm<TViewModel> : NavigationForm, IAmViewFor<TViewModel>
-where TViewModel : class, IRxObject
+where TViewModel : class, IRxNavBase
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="NavigationForm{TViewModel}"/> class.

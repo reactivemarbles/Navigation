@@ -13,7 +13,7 @@ namespace ReactiveMarbles.ViewModel.Wpf;
 /// </summary>
 /// <typeparam name="TViewModel">The type of the view model.</typeparam>
 public class RxUserControl<TViewModel> : UserControl, IAmViewFor<TViewModel>
-    where TViewModel : class, IRxObject
+    where TViewModel : class, IRxNavBase
 {
     /// <summary>
     /// The view model dependency property.

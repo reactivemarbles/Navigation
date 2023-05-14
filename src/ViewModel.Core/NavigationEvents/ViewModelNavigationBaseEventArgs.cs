@@ -19,7 +19,7 @@ public abstract class ViewModelNavigationBaseEventArgs
     /// </summary>
     /// <value>From.</value>
     [DataMember]
-    public IRxObject? From { get; protected set; }
+    public IRxNavBase? From { get; protected set; }
 
     /// <summary>
     /// Gets or sets the navigation parameter.
@@ -33,5 +33,5 @@ public abstract class ViewModelNavigationBaseEventArgs
     /// </summary>
     /// <value>To.</value>
     [DataMember]
-    public IRxObject? To { get; protected set; }
+    public IRxNavBase? To { get; protected set; }
 }
