@@ -56,7 +56,6 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
     private bool _resetStack;
     private IRxNavBase? _toViewModel;
     private bool _userInstigated;
-    private bool _cleaningNavigation;
     private ICoreRegistration? _coreRegistration;
 
     /// <summary>
@@ -78,11 +77,6 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
                         if (NavigationStack?.Count > 1)
                         {
                             NavigationStack.Remove(NavigationStack.Last());
-                        }
-
-                        if (Navigation.NavigationStack.Count > 1)
-                        {
-                            Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 1]);
                         }
                     }
                 }
@@ -294,11 +288,6 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
 
         navigatingEvent.Subscribe(e =>
         {
-            if (_cleaningNavigation)
-            {
-                return;
-            }
-
             if ((e.Source == ShellNavigationSource.Pop || e.Source == ShellNavigationSource.PopToRoot) && !CanNavigateBack)
             {
                 // Cancel navigate back
@@ -312,11 +301,6 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
         navigatedEvent
             .Subscribe(e =>
             {
-                if (_cleaningNavigation)
-                {
-                    return;
-                }
-
                 var navigatingForward = false;
                 try
                 {
@@ -461,12 +445,14 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
         {
             await Navigation.PopToRootAsync(true);
         }
+        else if (_navigateBack)
+        {
+            await Navigation.PopAsync(true);
+        }
         else
         {
             await Navigation.PushAsync(page, true);
         }
-
-        ////SyncNavigationStacks();
 
         if (CurrentPage is IAmViewFor p && __currentViewModel is not null)
         {
@@ -514,57 +500,5 @@ public class NavigationShell : Shell, ISetNavigation, IViewModelRoutedViewHost, 
         {
             ViewModelRoutedViewHostMixins.ResultNavigating[Name].OnNext(ea);
         }
-    }
-
-    private void SyncNavigationStacks()
-    {
-        if (Navigation.NavigationStack.Count != NavigationStack.Count
-            || StacksAreDifferent())
-        {
-            _cleaningNavigation = true;
-            for (var i = Navigation.NavigationStack.Count - 2; i >= 1; i--)
-            {
-                Navigation.RemovePage(Navigation.NavigationStack[i]);
-            }
-
-            var rootPage = Navigation.NavigationStack[1];
-
-            for (var i = 1; i < NavigationStack.Count - 1; i++)
-            {
-                var vm = NavigationStack[i];
-                var p = ServiceLocator.Current().GetView(vm!);
-                if (p != null)
-                {
-                    var page = ToPage(p!);
-                    Navigation.InsertPageBefore(page, rootPage);
-                }
-            }
-
-            _cleaningNavigation = false;
-        }
-    }
-
-    private bool StacksAreDifferent()
-    {
-        for (var i = 1; i < NavigationStack.Count; i++)
-        {
-            var vm = NavigationStack[i];
-            var page = Navigation.NavigationStack[i];
-
-            if (page is not IAmViewFor view)
-            {
-                return true;
-            }
-
-            var pageVm = view.ViewModel?.GetType();
-            var vmType = vm;
-
-            if (pageVm?.Equals(vmType) == false)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
