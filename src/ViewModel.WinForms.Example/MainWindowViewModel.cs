@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for full license information.
 
 #if !DESIGN
+using System.Runtime.Versioning;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.ViewModel.Core;
 using ViewModel.WinForms.Example;
@@ -20,6 +21,7 @@ public class MainWindowViewModel : RxNavBase
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
     /// </summary>
+    [RequiresPreviewFeatures]
     public MainWindowViewModel()
     {
         ServiceLocator.Current().AddSingleton<MainViewModel>(() => new());
