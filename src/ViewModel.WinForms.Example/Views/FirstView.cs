@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for full license information.
 
 #if !DESIGN
+using System.Runtime.Versioning;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.WinForms;
@@ -22,6 +23,7 @@ public partial class FirstView : RxUserControl<FirstViewModel>
     /// <summary>
     /// Initializes a new instance of the <see cref="FirstView"/> class.
     /// </summary>
+    [RequiresPreviewFeatures]
     public FirstView()
     {
         InitializeComponent();

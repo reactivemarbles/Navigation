@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel.WinForms.Example"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactiveMarbles.ViewModel.MAUI", "ReactiveMarbles.ViewModel.MAUI\ReactiveMarbles.ViewModel.MAUI.csproj", "{267783AB-7239-42A1-9596-22F53B8884D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel.MAUI.Example", "ViewModel.MAUI.Example\ViewModel.MAUI.Example.csproj", "{DE39BF42-E055-4797-9807-6AAA44089FE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel.MAUI.Example", "ViewModel.MAUI.Example\ViewModel.MAUI.Example.csproj", "{DE39BF42-E055-4797-9807-6AAA44089FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

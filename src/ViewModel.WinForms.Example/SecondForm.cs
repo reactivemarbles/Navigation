@@ -2,6 +2,7 @@
 // ReactiveUI Association Incorporated licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for full license information.
 
+using System.Runtime.Versioning;
 using ReactiveMarbles.Command;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveMarbles.ViewModel.Core;
@@ -12,12 +13,13 @@ namespace ViewModel.WinForms.Example;
 /// <summary>
 /// SecondForm.
 /// </summary>
-/// <seealso cref="System.Windows.Forms.Form" />
+/// <seealso cref="Form" />
 public partial class SecondForm : NavigationForm
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SecondForm"/> class.
     /// </summary>
+    [RequiresPreviewFeatures]
     public SecondForm()
     {
         InitializeComponent();
