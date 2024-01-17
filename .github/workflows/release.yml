@@ -16,21 +16,21 @@ jobs:
     outputs:
       nbgv: ${{ steps.nbgv.outputs.SemVer2 }}
     steps:
-    - name: Get Current Visual Studio Information
-      shell: bash
-      run: |
-        dotnet tool update -g dotnet-vs
-        echo "-- About RELEASE --"
-        vs where release
+    # - name: Get Current Visual Studio Information
+    #   shell: bash
+    #   run: |
+    #     dotnet tool update -g dotnet-vs
+    #     echo "-- About RELEASE --"
+    #     vs where release
         
-    - name: Update Visual Studio Latest Release
-      shell: bash
-      run: |
-        echo "-- Update RELEASE --"
-        vs update release Enterprise
-        vs modify release Enterprise +mobile +desktop +uwp +web
-        echo "-- About RELEASE Updated --"
-        vs where release
+    # - name: Update Visual Studio Latest Release
+    #   shell: bash
+    #   run: |
+    #     echo "-- Update RELEASE --"
+    #     vs update release Enterprise
+    #     vs modify release Enterprise +mobile +desktop +uwp +web
+    #     echo "-- About RELEASE Updated --"
+    #     vs where release
 
     - name: Checkout
       uses: actions/checkout@v4.1.1
@@ -44,6 +44,7 @@ jobs:
         dotnet-version: |
             6.0.x
             7.0.x
+            8.0.x
         
     - name: NBGV
       id: nbgv
