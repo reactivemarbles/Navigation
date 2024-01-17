@@ -16,6 +16,13 @@ jobs:
     outputs:
       nbgv: ${{ steps.nbgv.outputs.SemVer2 }}
     steps:
+
+    - name: 'Setup Java JDK 11'
+      uses: actions/setup-java@v4.0.0
+      with:
+         distribution: 'microsoft'
+         java-version: '11'
+
     # - name: Get Current Visual Studio Information
     #   shell: bash
     #   run: |
