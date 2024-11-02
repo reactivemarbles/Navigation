@@ -40,7 +40,7 @@ jobs:
     #     vs where release
 
     - name: Checkout
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.2
       with:
         fetch-depth: 0
         lfs: true
