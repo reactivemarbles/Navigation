@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net6.0;net7.0;net8.0;net7.0-macos;net8.0-macos;net7.0-tvos;net8.0-tvos;$(MauiTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);net462;net472;net6.0-windows10.0.19041.0;$(MauiWinTargetFrameworks)</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\ViewModel.Core\IAmViewFor.cs" Link="IAmViewFor.cs" />
+    <Compile Include="..\ViewModel.Core\IAmViewFor{T}.cs" Link="IAmViewFor{T}.cs" />
+    <Compile Include="..\ViewModel.Core\NavigationType.cs" Link="NavigationType.cs" />
+    <Compile Include="..\ViewModel.Core\RxObjectMixins.cs" Link="RxObjectMixins.cs" />
+    <Compile Include="..\ViewModel.Core\MagicInterfaces\*.cs" LinkBase="MagicInterfaces" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ReactiveMarbles.Mvvm" Version="1.0.46" />
+  </ItemGroup>
+
+</Project>
